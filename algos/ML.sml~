@@ -1,5 +1,0 @@
-fun Euclid (p:int, q:int) =
-    if q=0
-    then p
-    val r = p % q
-    Euclid(q:int, r:int)
