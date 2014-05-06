@@ -7,6 +7,12 @@ def Euclid(p, q):
 	r = p % q
 	return Euclid(q, r)
 
+def factorial(n):
+	if n == 0 or n == 1:
+		return 1
+	return n*factorial(n-1)
+
 if __name__ == '__main__':
-	print(Euclid(5, 0)) # 0
-	print(Euclid(100, 25)) # 25
+	print(Euclid(5, 0)) # 5
+	print(Euclid(25, 100)) # 25
+	print(factorial(5)) # 120
