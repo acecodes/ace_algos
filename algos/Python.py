@@ -1,9 +1,5 @@
 # Euclid's algorithm
 # Finds the greatest common factor (GCF) between two numbers
-
-# Test array for sorting algorithms
-test_array = [4, 5, 9, 1, 3, 2, 12, 7]
-
 def Euclid(p, q):
 	if q == 0:
 		return p
@@ -54,6 +50,10 @@ def merge_sort(array):
 	return array
 
 
+### Test Cases ###
+
+# Test array for sorting algorithms
+test_array = [4, 5, 9, 1, 3, 2, 12, 7]
 
 if __name__ == '__main__':
 	print(Euclid(5, 0)) # 5
