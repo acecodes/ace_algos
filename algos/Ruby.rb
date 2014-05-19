@@ -1,0 +1,18 @@
+#Euclid's algorithm for finding GCFs
+def Euclid(p, q)
+	if q == 0
+		return p
+	else
+		r = p % q
+		puts Euclid(q, r)
+		end
+	end
+
+# Factorial (n!)
+def factorial(n)
+	if n == 1
+		return 1
+	else
+		return n*factorial(n-1)
+		end
+	end
