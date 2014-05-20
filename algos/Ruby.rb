@@ -4,7 +4,7 @@ def Euclid(p, q)
 		return p
 	else
 		r = p % q
-		puts Euclid(q, r)
+		return Euclid(q, r)
 		end
 	end
 
