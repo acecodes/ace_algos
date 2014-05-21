@@ -13,6 +13,14 @@ def factorial(n):
 		return 1
 	return n*factorial(n-1)
 
+def Fibonacci(n):
+	if n <= 1:
+		return n
+	return Fibonacci(n-1) + Fibonacci(n-2)
+
+# Test array for sorting algorithms
+test_array = [4, 5, 9, 1, 3, 2, 12, 7]
+
 # Merge sort
 def merge_sort(array):
 	if len(array) == 1 or len(array) == 0:
@@ -48,15 +56,3 @@ def merge_sort(array):
 		sorted_count += 1
 
 	return array
-
-
-### Test Cases ###
-
-# Test array for sorting algorithms
-test_array = [4, 5, 9, 1, 3, 2, 12, 7]
-
-if __name__ == '__main__':
-	print(Euclid(5, 0)) # 5
-	print(Euclid(25, 100)) # 25
-	print(factorial(5)) # 120
-	print(merge_sort(test_array))
