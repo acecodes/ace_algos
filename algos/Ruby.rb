@@ -1,4 +1,4 @@
-#Euclid's algorithm for finding GCFs
+# Euclid's algorithm for finding GCFs
 def Euclid(p, q)
 	if q == 0
 		return p
@@ -25,5 +25,3 @@ def Fibonacci(n)
 		return Fibonacci(n-1) + Fibonacci(n-2)
 		end
 	end
-
-puts Fibonacci(5)
