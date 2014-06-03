@@ -41,9 +41,14 @@ int Factorial(int n) {
 }
 
 int main() {
-
-	cout << "Euclid's algorith with 15 and 5: " << Euclid(15, 5) << endl;
-	cout << "Fibonacci sequence up to 10: " << Fibonacci(10) << endl;
-	cout << "7 Factorial: " << Factorial(7) << endl;
+	int input1;
+	int input2;
+	cout << "Enter a number: ";
+	cin >> input1;
+	cout << "Now enter another: ";
+	cin >> input2;
+	cout << "Euclid's algorith: " << Euclid(input1, input2) << endl;
+	cout << "Fibonacci sequence: " << Fibonacci(input1) << endl;
+	cout << "Factorial: " << Factorial(input1) << endl;
 	return 0;
 }
