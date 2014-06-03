@@ -16,10 +16,12 @@ int Euclid(int p, int q) {
 	}
 }
 
+// Fibonacci sequence
+
 int Fibonacci(int n) {
 
-	if (n == 0 | n == 1) {
-		return 1;
+	if (n <= 1) {
+		return n;
 	}
 
 	else {
@@ -27,9 +29,21 @@ int Fibonacci(int n) {
 	}
 }
 
+int Factorial(int n) {
+
+	if (n == 0 | n == 1) {
+		return 1;
+	}
+
+	else {
+		return n * Factorial(n-1);
+	}
+}
+
 int main() {
 
 	cout << "Euclid's algorith with 15 and 5: " << Euclid(15, 5) << endl;
 	cout << "Fibonacci sequence up to 10: " << Fibonacci(10) << endl;
+	cout << "7 Factorial: " << Factorial(7) << endl;
 	return 0;
 }
