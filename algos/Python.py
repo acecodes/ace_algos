@@ -1,3 +1,6 @@
+# Compatability imports that allow usage in Python 2 & 3
+from __future__ import print_function
+
 # Euclid's algorithm
 # Finds the greatest common factor (GCF) between two numbers
 def Euclid(p, q):
@@ -57,3 +60,32 @@ def merge_sort(array):
 		sorted_count += 1
 
 	return array
+
+# Luhn's algorith, for checking the validity of certain number combinations
+# AKA mod 10 algorithm
+def Luhn(digits):
+	### WORK IN PROGRESS, NOT FUNCTIONING CORRECTLY YET ###
+	digits = list(str(digits))
+	
+	# From the rightmost digit, double the value of ever second digit
+	double_second = [int(x)*2 for x in digits[-1::-2]]
+	
+	# Check if any doubles are over 9
+	check_9 = [x for x in double_second if x > 9]
+
+	# Add digits of doubled items together
+	add_digits = [int(str(x)[0])+int(str(x)[1]) for x in check_9]
+
+	# Replace digits whose doubled product is larger than 9 with summed digits
+	for items in double_second:
+		if int(items) > 9:
+			items = add_digits.pop()
+
+	final = ''.join(digits)
+
+	print(final)
+
+
+
+if __name__ == '__main__':
+	Luhn(7992739871)
