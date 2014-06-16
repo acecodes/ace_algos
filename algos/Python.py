@@ -61,31 +61,43 @@ def merge_sort(array):
 
 	return array
 
-# Luhn's algorith, for checking the validity of certain number combinations
+# Luhn's algorith, for generating and validating number sequences
 # AKA mod 10 algorithm
+
+# Generate a proper sum for a given sequence
 def Luhn(digits):
-	### WORK IN PROGRESS, NOT FUNCTIONING CORRECTLY YET ###
-	digits = list(str(digits))
+	# Ensure that the data entered can become a list
+	if type(digits) != 'str':
+		digits = str(digits)
 	
-	# From the rightmost digit, double the value of ever second digit
-	double_second = [int(x)*2 for x in digits[-1::-2]]
-	
-	# Check if any doubles are over 9
-	check_9 = [x for x in double_second if x > 9]
+	# Convert data entered 
+	digits = [int(x) for x in digits]
 
-	# Add digits of doubled items together
-	add_digits = [int(str(x)[0])+int(str(x)[1]) for x in check_9]
+	# Run heart of the algorithm, a description of which can be found on Wikipedia:
+	# https://en.wikipedia.org/wiki/Luhn_algorithm
 
-	# Replace digits whose doubled product is larger than 9 with summed digits
-	for items in double_second:
-		if int(items) > 9:
-			items = add_digits.pop()
+	for chars in digits[-1::-2]:
+		if chars*2 > 9:
+			subscript = digits.index(chars)
+			chars = chars*2
+			chars = int(int(str(chars)[0])+int(str(chars)[1]))
+			digits[subscript] = chars
+		else:
+			subscript = digits.index(chars)
+			chars = chars*2
+			digits[subscript] = chars
 
-	final = ''.join(digits)
+	return sum(digits)
 
-	print(final)
+# Generate a check digit
+def Luhn_digit(digits):
+	return str(Luhn(digits)*9)[-1]
 
-
+# See if a sequence of digits and a key match up
+def Luhn_check(digits, check):
+	return (Luhn(digits) + check) % 10 == 0
 
 if __name__ == '__main__':
-	Luhn(7992739871)
+	print(Luhn_digit(7992739871)) # Generate a valid key sum for a check digit
+	print(Luhn_check(7992739871, 3)) # Check a valid digit and key - should return True
+	print(Luhn_check(7992739871, 2)) # Check an invalid digit and key - should return False
