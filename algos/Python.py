@@ -97,7 +97,18 @@ def Luhn_digit(digits):
 def Luhn_check(digits, check):
 	return (Luhn(digits) + check) % 10 == 0
 
+# Recursively sum up a list of numbers
+def listsum(lst):
+	# Define a base case
+	if len(lst) == 1:
+		return lst[0]
+	# Move through the list recursively
+	else:
+		return lst[0] + listsum(lst[1:])
+
+
 if __name__ == '__main__':
 	print(Luhn_digit(7992739871)) # Generate a valid key sum for a check digit
 	print(Luhn_check(7992739871, 3)) # Check a valid digit and key - should return True
 	print(Luhn_check(7992739871, 2)) # Check an invalid digit and key - should return False
+	print(listsum([1,56,9,12,22])) # Should return 100
