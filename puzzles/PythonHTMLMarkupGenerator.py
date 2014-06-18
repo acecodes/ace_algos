@@ -1,6 +1,6 @@
 # Generate an HTML file with user input for title and the content of a single paragraph
 
-from os import system
+import webbrowser
 
 def gen_html_file(entry, title="Default Title", open_output=False):
 	output = """<!DOCTYPE html>
@@ -19,4 +19,7 @@ def gen_html_file(entry, title="Default Title", open_output=False):
 		html_generator.write(output)
 
 	if open_output == True:
-		system("""firefox 'result.html'""")
+		webbrowser.open("result.html")
+
+if __name__ == '__main__':
+	gen_html_file('This is a test', title='Test page', open_output=True)
