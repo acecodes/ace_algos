@@ -48,9 +48,20 @@ class Database:
 
 		conn = sqlite3.connect("{title}.db".format(title=self.title))
 		cursor = conn.cursor()
-		result = cursor.fetchall()
+		
+		cursor.executescript("""
 
-		cursor.execute("""CREATE TABLE {title} (LastName char(50), FirstName char(50), Average INT(3), Grade char(2), Score1 INT(3), Score2 INT(3), Score3 INT(3), Score4 INT(3), Score5 INT(3));""".format(title=self.title))
+			CREATE TABLE {title} (FirstName char(50), 
+                      LastName char(50), 
+                      Average INT(3),
+                      Grade char(2), 
+                      Score1 INT(3), 
+                      Score2 INT(3), 
+                      Score3 INT(3), 
+                      Score4 INT(3), 
+                      Score5 INT(3));
+
+			""".format(title=self.title))
 
 		conn.commit()
 		cursor.close()
@@ -61,9 +72,26 @@ class Database:
 		cursor = conn.cursor()
 		result = cursor.fetchall()
 
-		cursor.execute("""INSERT INTO Grades (LastName, FirstName, Average, Grade, Score1, Score2, Score3, Score4, Score5)
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""", (student_obj.last_name, student_obj.first_name, student_obj.average(), student_obj.grade(), student_obj.score1,
+		cursor.execute("""INSERT INTO Grades (FirstName, LastName, Average, Grade, Score1, Score2, Score3, Score4, Score5)
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""", (student_obj.first_name, student_obj.last_name, student_obj.average(), student_obj.grade(), student_obj.score1,
 				student_obj.score2, student_obj.score3, student_obj.score4, student_obj.score5))
+
+		conn.commit()
+		cursor.close()
+		conn.close()
+
+
+	def __call__(self):
+		conn = sqlite3.connect("{title}.db".format(title=self.title))
+		cursor = conn.cursor()
+		result = cursor.fetchall()
+
+		grades = cursor.execute('''SELECT * FROM Grades ORDER BY Average DESC;''')
+
+		for results in grades:
+			for students in results:
+				print(str(students).ljust(5)),
+			print
 
 		conn.commit()
 		cursor.close()
@@ -72,8 +100,9 @@ class Database:
 
 if __name__ == "__main__":
 	Bob = Student("Bob", "Smith", 69, 69, 69, 69, 65)
-	print(Bob.average())
-	print(Bob.grade())
+	Jane = Student("Jane", "Doe", 81, 79, 99, 59, 45)
 	Grades = Database("Grades")
 	Grades.create_db()
 	Grades.student_insert(Bob)
+	Grades.student_insert(Jane)
+	print(Grades())
