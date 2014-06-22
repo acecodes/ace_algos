@@ -23,7 +23,6 @@ def prob2():
 	By considering the terms in the Fibonacci sequence whose values do not exceed four million, find
 	the sum of the even-valued terms.
 	"""
-
 	answer = 0
 	a, b = 0, 1
 	endpoint = 4000000
@@ -34,6 +33,26 @@ def prob2():
 			answer = answer + b 
 	return answer
 
+def prob3():
+	"""
+	Problem 3:
+
+	The prime factors of 13195 are 5, 7, 13 and 29.
+
+	What is the largest prime factor of the number 600851475143?
+	"""
+	end = 600851475143
+	start = 2
+
+	while (start**2 <= end):
+		if (end % start == 0):
+			end /= start
+		else:
+			start += 2 if start > 2 else 1
+
+	return start
+
 if __name__ == '__main__':
 	print("Problem 1: " + str(prob1()))
 	print("Problem 2: " + str(prob2()))
+	print("Problem 3: " + str(prob3()))
