@@ -1,3 +1,4 @@
+#!/usr/bin/python
 
 def prob1():
 	""" 
@@ -52,7 +53,24 @@ def prob3():
 
 	return start
 
+def prob4():
+	"""
+	A palindromic number reads the same both ways. The largest palindrome made from the product
+	of two 2-digit numbers is 9009 = 91 * 99.
+
+	Find the largest palindrome made from the product of two 3-digit numbers.
+	"""
+	palindromes = []
+
+	for i in range(100, 999, 1):
+		for j in range(999, 100, -1):
+			if str(i*j)[::-1] == str(i*j):
+				palindromes.append(i*j) 
+
+	return max(palindromes)
+
 if __name__ == '__main__':
 	print("Problem 1: " + str(prob1()))
 	print("Problem 2: " + str(prob2()))
 	print("Problem 3: " + str(prob3()))
+	print("Problem 4: " + str(prob4()))
