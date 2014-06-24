@@ -56,7 +56,7 @@ def prob3():
 def prob4():
 	"""
 	Problem 4:
-	
+
 	A palindromic number reads the same both ways. The largest palindrome made from the product
 	of two 2-digit numbers is 9009 = 91 * 99.
 
@@ -67,12 +67,29 @@ def prob4():
 	for i in range(100, 999, 1):
 		for j in range(999, 100, -1):
 			if str(i*j)[::-1] == str(i*j):
-				palindromes.append(i*j) 
+				palindromes.append(i*j)
 
 	return max(palindromes)
+
+def prob5():
+	"""
+	Problem 5:
+
+	2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any 
+	remainder.
+
+	What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+	"""
+	smaller_list = [11, 13, 14, 16, 17, 18, 19, 20]
+
+	for numbers in range(2520, 999999999, 2520):
+		if all(numbers % n == 0 for n in smaller_list):
+			return numbers
+	return None
 
 if __name__ == '__main__':
 	print("Problem 1: " + str(prob1()))
 	print("Problem 2: " + str(prob2()))
 	print("Problem 3: " + str(prob3()))
 	print("Problem 4: " + str(prob4()))
+	print("Problem 5: " + str(prob5()))
