@@ -87,9 +87,40 @@ def prob5():
 			return numbers
 	return None
 
+def prob6():
+	"""
+
+	The sum of the squares of the first ten natural numbers is,
+
+	1^2 + 2^2 + ... + 10^2 = 385
+
+	The square of the sum of the first ten natural numbers is,
+
+	(1 + 2 + ... + 10)^2 = 55^2 = 3025
+
+	Hence the difference between the sum of the squares of the first ten natural numbers
+	and the square of the sum is 3025 - 385 = 2640.
+
+	Find the difference between the sum of the squares of the first hundred natural numbers and
+	the square of the sum.
+
+	"""
+
+	# Sum of the squares between 1 and 100
+	sum_of_squares = sum([x**2 for x in range(1, 101)])
+
+	# Square of the sum
+	square_of_sum = sum([x for x in range(1, 101)])**2
+
+	# Difference between two
+	difference = square_of_sum - sum_of_squares
+
+	return difference
+
 if __name__ == '__main__':
 	print("Problem 1: " + str(prob1()))
 	print("Problem 2: " + str(prob2()))
 	print("Problem 3: " + str(prob3()))
 	print("Problem 4: " + str(prob4()))
 	print("Problem 5: " + str(prob5()))
+	print("Problem 6: " + str(prob6()))
