@@ -1,4 +1,23 @@
 #!/usr/bin/python
+import math
+
+""" 
+Shared functions
+"""
+
+def primality_test(n):
+    n = int(n)
+    if n == 2 or n == 3: return True
+    if n < 2 or n % 2 == 0: return False
+    if n < 9: return True
+    if n % 3 == 0: return False
+    r = int(math.sqrt(n))
+    f = 5
+    while f <= r:
+        if n % f == 0: return False
+        if n % (f + 2) == 0: return False
+        f +=6
+    return True
 
 def prob1():
 	""" 
@@ -89,6 +108,7 @@ def prob5():
 
 def prob6():
 	"""
+	Problem 6:
 
 	The sum of the squares of the first ten natural numbers is,
 
@@ -117,6 +137,29 @@ def prob6():
 
 	return difference
 
+def prob7():
+	"""
+	Problem 7:
+
+	By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
+
+	What is the 10,001st prime number?
+	"""
+	end = 10001
+	start = 2
+	count = 1
+	primes = []
+
+	while count <= end:
+		if primality_test(start) == True:
+			primes.append(start)
+			count += 1
+		start += 1
+
+	return max(primes)
+
+
+
 if __name__ == '__main__':
 	print("Problem 1: " + str(prob1()))
 	print("Problem 2: " + str(prob2()))
@@ -124,3 +167,4 @@ if __name__ == '__main__':
 	print("Problem 4: " + str(prob4()))
 	print("Problem 5: " + str(prob5()))
 	print("Problem 6: " + str(prob6()))
+	print("Problem 7: " + str(prob7()))
