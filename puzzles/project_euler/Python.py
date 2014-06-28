@@ -19,6 +19,15 @@ def primality_test(n):
         f +=6
     return True
 
+def pythag_trip(a, b, c):
+	return a**2 + b**2 == c**2
+
+"""
+
+---- Beginning of Project Euler solutions ---
+
+"""
+
 def prob1():
 	""" 
 	Problem 1:
@@ -182,8 +191,28 @@ def prob8():
 
 	return max(products)
 
+def prob9():
+	"""
+	Problem 9:
 
+	A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
 
+	a^2 + b^2 = c^2
+
+	For example, 3^2 + 4^2 = 9 + 16 = 25 = 5^2
+
+	There exists exactly one Pythagorean triplet for which a + b + c = 1000
+	Find the product abc.
+	"""
+	from math import sqrt
+
+	for m in range(int(sqrt(1000/2)), int(sqrt(1000)/2), -1):
+		n = 1000 / (2.0*m) - m
+		if n > 0 and n % 1 == 0:
+			a = m*m - n*n
+			b = 2*m*n
+			c = m*m + n*n
+			return map(int, (a, b, c, a*b*c))
 
 
 if __name__ == '__main__':
@@ -195,3 +224,4 @@ if __name__ == '__main__':
 	print("Problem 6: " + str(prob6()))
 	print("Problem 7: " + str(prob7()))
 	print("Problem 8: " + str(prob8()))
+	print("Problem 9: " + str(prob9()))
