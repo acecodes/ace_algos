@@ -226,14 +226,11 @@ def prob10():
 	return sum([x for x in range(1, 2000000) if primality_test(x) == True])
 
 
+def select_problem(n):
+
+	return eval("prob" + str(n) + "()") 
+
 if __name__ == '__main__':
-	print("Problem 1: " + str(prob1()))
-	print("Problem 2: " + str(prob2()))
-	print("Problem 3: " + str(prob3()))
-	print("Problem 4: " + str(prob4()))
-	print("Problem 5: " + str(prob5()))
-	print("Problem 6: " + str(prob6()))
-	print("Problem 7: " + str(prob7()))
-	print("Problem 8: " + str(prob8()))
-	print("Problem 9: " + str(prob9()))
-	print("Problem 10: " + str(prob10()))
+	choice = int(input("Hello, and welcome to my Project Euler script.\nPlease enter the number of the PE question you want the answer to: "))
+	print("Problem " + str(choice) + " Solution: "),
+	print(select_problem(choice))
