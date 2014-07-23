@@ -214,6 +214,17 @@ def prob9():
 			c = m*m + n*n
 			return map(int, (a, b, c, a*b*c))
 
+def prob10():
+	"""
+	Problem 10:
+
+	The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+
+	Find the sum of all the primes below two million.
+	"""
+
+	return sum([x for x in range(1, 2000000) if primality_test(x) == True])
+
 
 if __name__ == '__main__':
 	print("Problem 1: " + str(prob1()))
@@ -225,3 +236,4 @@ if __name__ == '__main__':
 	print("Problem 7: " + str(prob7()))
 	print("Problem 8: " + str(prob8()))
 	print("Problem 9: " + str(prob9()))
+	print("Problem 10: " + str(prob10()))
