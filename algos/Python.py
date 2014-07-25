@@ -1,6 +1,17 @@
 # Compatability imports that allow usage in Python 2 & 3
 from __future__ import print_function
 
+# Linear search
+def linear_search(values, target):
+	i = 0
+	for item in values:
+		if values[i] == target:
+			return item
+		else:
+			i += 1
+	return -1
+
+
 # Euclid's algorithm
 # Finds the greatest common factor (GCF) between two numbers
 def Euclid(p, q):
@@ -112,3 +123,5 @@ if __name__ == '__main__':
 	print(Luhn_check(7992739871, 3)) # Check a valid digit and key - should return True
 	print(Luhn_check(7992739871, 2)) # Check an invalid digit and key - should return False
 	print(listsum([1,56,9,12,22])) # Should return 100
+	print(linear_search([5, 1, 8, 15, 29, 3, 19], 3)) # Returns 3
+	print(linear_search([5, 1, 8, 15, 29, 3, 19], 27)) # Returns -1
