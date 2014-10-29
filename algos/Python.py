@@ -33,9 +33,6 @@ def Fibonacci(n):
 		return n
 	return Fibonacci(n-1) + Fibonacci(n-2)
 
-# Test array for sorting algorithms
-test_array = [4, 5, 9, 1, 3, 2, 12, 7]
-
 # Merge sort
 def merge_sort(array):
 	if len(array) == 1 or len(array) == 0:
@@ -117,6 +114,26 @@ def listsum(lst):
 	else:
 		return lst[0] + listsum(lst[1:])
 
+# Binary search
+def binary_search(data, target, low, high):
+
+	if low > high:
+		return False
+
+	else:
+		mid = (low + high) // 2
+		if target == data[mid]: # Found match
+			return True
+		elif target < data[mid]:
+			# Recur on the left side of the array
+			return binary_search(data, target, low, mid-1)
+		else:
+			# Recur on the right side of the array
+			return binary_search(data, target, mid + 1, high)
+
+
+# Test array for sorting algorithms
+test_array = [4, 5, 9, 1, 3, 2, 12, 7]
 
 if __name__ == '__main__':
 	print(Luhn_digit(7992739871)) # Generate a valid key sum for a check digit
@@ -125,3 +142,4 @@ if __name__ == '__main__':
 	print(listsum([1,56,9,12,22])) # Should return 100
 	print(linear_search([5, 1, 8, 15, 29, 3, 19], 3)) # Returns 3
 	print(linear_search([5, 1, 8, 15, 29, 3, 19], 27)) # Returns -1
+	print(binary_search(test_array, 3, 1, 12))
