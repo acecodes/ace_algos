@@ -27,11 +27,19 @@ def factorial(n):
 		return 1
 	return n*factorial(n-1)
 
-# Fibonacci
+# Fibonacci (runs in quadratic time)
 def Fibonacci(n):
 	if n <= 1:
 		return n
 	return Fibonacci(n-1) + Fibonacci(n-2)
+
+# Fibonacci (runs in linear time)
+def Fibonacci_improved(n):
+	if n <= 1:
+		return (n, 0)
+	else:
+		(a,b) = Fibonacci_improved(n-1)
+		return (a+b, a)
 
 # Merge sort
 def merge_sort(array):
@@ -146,3 +154,4 @@ if __name__ == '__main__':
 	print(linear_search([5, 1, 8, 15, 29, 3, 19], 27)) # Returns -1
 	print(binary_search(test_array, 3, 1, 12))
 	print(sum_of_nums_from_string("1.23,1.10,5.9,8.1"))
+	print(Fibonacci_improved(10))
