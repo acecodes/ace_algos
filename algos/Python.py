@@ -131,6 +131,8 @@ def binary_search(data, target, low, high):
 			# Recur on the right side of the array
 			return binary_search(data, target, mid + 1, high)
 
+def sum_of_nums_from_string(string):
+	return sum([float(x) for x in string.split(',')])
 
 # Test array for sorting algorithms
 test_array = [4, 5, 9, 1, 3, 2, 12, 7]
@@ -143,3 +145,4 @@ if __name__ == '__main__':
 	print(linear_search([5, 1, 8, 15, 29, 3, 19], 3)) # Returns 3
 	print(linear_search([5, 1, 8, 15, 29, 3, 19], 27)) # Returns -1
 	print(binary_search(test_array, 3, 1, 12))
+	print(sum_of_nums_from_string("1.23,1.10,5.9,8.1"))
