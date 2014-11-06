@@ -154,6 +154,14 @@ def binary_search_iter(data, target):
 			low = mid + 1
 	return False
 
+def reverse(s):
+	"""Iteratively reverse items in sequence s"""
+	start, stop = 0, len(s)
+	while start < stop - 1:
+		s[start], s[stop-1] = s[stop-1], s[start]
+		start, stop = start + 1, stop - 1
+	return s
+
 def sum_of_nums_from_string(string):
 	return sum([float(x) for x in string.split(',')])
 
@@ -171,3 +179,4 @@ if __name__ == '__main__':
 	print(binary_search_iter(test_array, 3))
 	print(sum_of_nums_from_string("1.23,1.10,5.9,8.1"))
 	print(Fibonacci_improved(10))
+	print(reverse(test_array))
