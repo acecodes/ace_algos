@@ -139,6 +139,21 @@ def binary_search(data, target, low, high):
 			# Recur on the right side of the array
 			return binary_search(data, target, mid + 1, high)
 
+# Binary search with iteration
+def binary_search_iter(data, target):
+	"""Return True if target is found in the given list"""
+	low = 0
+	high = len(data)-1
+	while low <= high:
+		mid = (low+high) // 2
+		if target == data[mid]:
+			return True
+		elif target < data[mid]:
+			high = mid - 1
+		else:
+			low = mid + 1
+	return False
+
 def sum_of_nums_from_string(string):
 	return sum([float(x) for x in string.split(',')])
 
@@ -153,5 +168,6 @@ if __name__ == '__main__':
 	print(linear_search([5, 1, 8, 15, 29, 3, 19], 3)) # Returns 3
 	print(linear_search([5, 1, 8, 15, 29, 3, 19], 27)) # Returns -1
 	print(binary_search(test_array, 3, 1, 12))
+	print(binary_search_iter(test_array, 3))
 	print(sum_of_nums_from_string("1.23,1.10,5.9,8.1"))
 	print(Fibonacci_improved(10))
