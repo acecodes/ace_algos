@@ -168,6 +168,17 @@ def sum_of_nums_from_string(string):
 # Test array for sorting algorithms
 test_array = [4, 5, 9, 1, 3, 2, 12, 7]
 
+def measure_dynamic_array(n):
+	"""Measure the number of bytes a dynamic array up to size n-1
+	takes up in memory"""
+	import sys
+	data = []
+	for k in range(n):
+		a = len(data)
+		b = sys.getsizeof(data)
+		print("Length: {0:3d}; Size in bytes: {1:4d}".format(a,b))
+		data.append(None)
+
 if __name__ == '__main__':
 	print(Luhn_digit(7992739871)) # Generate a valid key sum for a check digit
 	print(Luhn_check(7992739871, 3)) # Check a valid digit and key - should return True
@@ -180,3 +191,4 @@ if __name__ == '__main__':
 	print(sum_of_nums_from_string("1.23,1.10,5.9,8.1"))
 	print(Fibonacci_improved(10))
 	print(reverse(test_array))
+	print(measure_dynamic_array(20)) # Note how an empty dynamic array takes up 72 (on my system) bytes
