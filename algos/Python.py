@@ -179,6 +179,12 @@ def measure_dynamic_array(n):
 		print("Length: {0:3d}; Size in bytes: {1:4d}".format(a,b))
 		data.append(None)
 
+def combos(n, permutations):
+	"""Return combinations from a set of numbers up to n"""
+	from itertools import combinations
+	return list(combinations(range(n), permutations))
+
+
 if __name__ == '__main__':
 	print(Luhn_digit(7992739871)) # Generate a valid key sum for a check digit
 	print(Luhn_check(7992739871, 3)) # Check a valid digit and key - should return True
@@ -192,3 +198,4 @@ if __name__ == '__main__':
 	print(Fibonacci_improved(10))
 	print(reverse(test_array))
 	print(measure_dynamic_array(20)) # Note how an empty dynamic array takes up 72 (on my system) bytes
+	print(combos(5, 3))
