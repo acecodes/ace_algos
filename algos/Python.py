@@ -21,11 +21,19 @@ def Euclid(p, q):
 	return Euclid(q, r)
 
 
-# Factorial (n!)
+# Factorial (n!) - recursive
 def factorial(n):
 	if n == 0 or n == 1:
 		return 1
 	return n*factorial(n-1)
+
+# Factorial (n!) - iterative
+def factorial_i(n):
+	result = 1
+	while n > 1:
+		result = result * n
+		n -= 1
+	return result
 
 # Fibonacci (runs in quadratic time)
 def Fibonacci(n):
@@ -199,3 +207,5 @@ if __name__ == '__main__':
 	print(reverse(test_array))
 	print(measure_dynamic_array(20)) # Note how an empty dynamic array takes up 72 (on my system) bytes
 	print(combos(5, 3))
+	print(factorial(5)) # Should return 120
+	print(factorial_i(5)) # Should also return 120
