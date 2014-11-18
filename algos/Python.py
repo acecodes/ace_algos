@@ -219,6 +219,33 @@ class Generation(Algorithms):
 			start, stop = start + 1, stop - 1
 		return s
 
+class Crypto(Algorithms):
+
+	class CaesarCipher:
+		"""Encrypt and decrypt using the ancient Caesar cipher"""
+		def __init__(self, shift):
+			"""Define the cipher"""
+			encoder = [None] * 26
+			decoder = [None] * 26
+			for k in range(26):
+				encoder[k] = chr((k + shift) % 26 + ord('A'))
+				decoder[k] = chr((k - shift) % 26 + ord('A'))
+			self._forward = ''.join(encoder)
+			self._backward = ''.join(decoder)
+
+		def encrypt(self, message):
+			return self._transform(message, self._forward)
+
+		def decrypt(self, message):
+			return self._transform(message, self._backward)
+
+		def _transform(self, original, code):
+			msg = list(original.upper())
+			for k in range(len(msg)):
+				if msg[k].isupper():
+					j = ord(msg[k]) - ord('A')
+					msg[k] = code[j]
+			return ''.join(msg)
 
 
 def measure_dynamic_array(n):
@@ -238,3 +265,12 @@ if __name__ == '__main__':
 	print(Generation.Luhn_digit(7992739871)) # Generate a valid key sum for a check digit
 	print(Generation.Luhn_check(7992739871, 3)) # Check a valid digit and key - should return True
 	print(Generation.Luhn_check(7992739871, 2)) # Check an invalid digit and key - should return False
+
+	"""Testing out the Caesar cipher"""
+	CC = Crypto.CaesarCipher(5)
+	test_message = 'The proof is in the pudding'
+	encrypted_message = CC.encrypt(test_message)
+	print(encrypted_message)
+	decrypted_message = CC.decrypt(encrypted_message)
+	print(decrypted_message)
+	print(CC.encrypt('Hello world'))
