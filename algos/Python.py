@@ -2,12 +2,43 @@
 from __future__ import print_function
 from timeit import Timer
 
+class Exceptions:
+	class Empty(Exception):
+		pass
+
 class Algorithms:
 	@classmethod
 	def test(cls, algo):
 		being_tested = Timer('{0}'.format(algo))
 		return being_tested.timeit(algo)
 
+class DataStructures(Algorithms):
+	class ArrayStack:
+		"""LIFO stack implementation with Python lists"""
+
+		def __init__(self):
+			self._data = [] # Private list
+
+		def __len__(self):
+			return len(self._data)
+
+		def is_empty(self):
+			return len(self._data) == 0
+
+		def push(self, e):
+			self._data.append(e)
+
+		def top(self):
+			# Last item in stack
+			if self.is_empty():
+				raise Exceptions.Empty('Stack is empty')
+			return self._data[-1]
+
+		def pop(self):
+			"""Remove and return element at the top (LIFO)"""
+			if self.is_empty():
+				raise Empty('Stack is empty')
+			return self._data.pop()
 
 
 class Search(Algorithms):
@@ -274,3 +305,8 @@ if __name__ == '__main__':
 	decrypted_message = CC.decrypt(encrypted_message)
 	print(decrypted_message)
 	print(CC.encrypt('Hello world'))
+
+	"""Using my stack"""
+	stack1 = DataStructures.ArrayStack()
+	stack1.push('abc')
+	print(stack1.pop())
