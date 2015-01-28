@@ -57,6 +57,9 @@ class DataStructures(Algorithms):
         def is_empty(self):
             return self.items == []
 
+        def clear(self):
+            self.items = []
+
         def push(self, item):
             return self.items.append(item)
 
@@ -88,6 +91,21 @@ class DataStructures(Algorithms):
                 binary_string = binary_string + str(self.pop())
 
             return binary_string
+
+        def base_convert(self, number, base):
+            """Convert decimal number to any base, not just base-2"""
+            digits = "0123456789ABCDEF"
+
+            while number > 0:
+                remainder = number % base
+                self.push(remainder)
+                number = number // base
+
+            new_string = ""
+            while not self.is_empty():
+                new_string = new_string + digits[self.pop()]
+
+            return new_string
 
 
 class Search(Algorithms):
@@ -382,3 +400,9 @@ if __name__ == '__main__':
     """Convert decimal numbers to binary"""
     stack4 = DataStructures.Stack()
     print(stack4.decimal2binary(5))
+
+    """Convert decimal numbers to other bases"""
+    stack5 = DataStructures.Stack()
+    print(stack5.base_convert(25, 8))
+    print(stack5.base_convert(256, 16))
+    print(stack5.base_convert(26, 26))
