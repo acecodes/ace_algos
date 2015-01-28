@@ -5,8 +5,8 @@ def Euclid(p, q)
 	else
 		r = p % q
 		return Euclid(q, r)
-		end
 	end
+end
 
 # Factorial (n!)
 def factorial(n)
@@ -14,8 +14,8 @@ def factorial(n)
 		return 1
 	else
 		return n*factorial(n-1)
-		end
 	end
+end
 
 # Fibonacci series
 def Fibonacci(n)
@@ -23,5 +23,5 @@ def Fibonacci(n)
 		return n
 	else
 		return Fibonacci(n-1) + Fibonacci(n-2)
-		end
 	end
+end

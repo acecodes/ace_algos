@@ -54,7 +54,7 @@ class DataStructures(Algorithms):
         def __init__(self):
             self.items = []
 
-        def isEmpty(self):
+        def is_empty(self):
             return self.items == []
 
         def push(self, item):
@@ -70,10 +70,24 @@ class DataStructures(Algorithms):
             return len(self.items)
 
         def reverse_string(self, string):
+            """Reverse a string"""
             string = list(string)
             for char in string[::-1]:
                 self.push(char)
             return ''.join(self.items)
+
+        def decimal2binary(self, number):
+            """Convert decimal number to binary"""
+            while number > 0:
+                remainder = number % 2
+                self.push(remainder)
+                number = number // 2
+
+            binary_string = ""
+            while not self.is_empty():
+                binary_string = binary_string + str(self.pop())
+
+            return binary_string
 
 
 class Search(Algorithms):
@@ -364,3 +378,7 @@ if __name__ == '__main__':
     """Reverse string using stack"""
     stack3 = DataStructures.Stack()
     print(stack3.reverse_string('ABC'))
+
+    """Convert decimal numbers to binary"""
+    stack4 = DataStructures.Stack()
+    print(stack4.decimal2binary(5))
