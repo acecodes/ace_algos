@@ -107,6 +107,26 @@ class DataStructures(Algorithms):
 
             return new_string
 
+    class Queue:
+        """FIFO Queue data structure"""
+        def __init__(self):
+            self.items = []
+
+        def __str__(self):
+            return str(self.items)
+
+        def is_empty(self):
+            return self.items == []
+
+        def enqueue(self, item):
+            return self.items.insert(0, item)
+
+        def dequeue(self):
+            return self.items.pop()
+
+        def size(self):
+            return len(self.items)
+
 
 class Search(Algorithms):
     # Linear search
@@ -406,3 +426,11 @@ if __name__ == '__main__':
     print(stack5.base_convert(25, 8))
     print(stack5.base_convert(256, 16))
     print(stack5.base_convert(26, 26))
+
+    """Take my queue data structure for a spin"""
+    queue1 = DataStructures.Queue()
+    queue1.enqueue(5)
+    queue1.enqueue(True)
+    queue1.enqueue('Boomshakala!')
+    queue1.dequeue()
+    print(queue1)
