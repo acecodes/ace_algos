@@ -135,6 +135,20 @@ class DataStructures(Algorithms):
         def remove_rear(self):
             return self.items.pop(0)
 
+        def palindrome_checker(self, string):
+            for i in string:
+                self.add_rear(i)
+
+            still_equal = True
+
+            while self.size() > 1 and still_equal:
+                first = self.remove_front()
+                last = self.remove_rear()
+                if first != last:
+                    still_equal = False
+
+            return still_equal
+
 
 class Search(Algorithms):
     # Linear search
@@ -457,3 +471,8 @@ if __name__ == '__main__':
     deque1.remove_rear()
     deque1.remove_front()
     print(deque1)
+
+    """Palindrome check using deque"""
+    deque2 = DataStructures.Deque()
+    print(deque2.palindrome_checker('radar'))
+    print(deque2.palindrome_checker('steve'))
