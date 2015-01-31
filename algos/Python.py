@@ -47,15 +47,22 @@ class DataStructures(Algorithms):
                 raise Exceptions.Empty('Stack is empty')
             return self._data.pop()
 
-    class Stack:
-
-        """Improved stack data structure"""
-
+    class LinearDataStructure:
+        """Base class to be used by stacks, queues and deques"""
         def __init__(self):
             self.items = []
 
         def is_empty(self):
             return self.items == []
+
+        def __str__(self):
+            return str(self.items)
+
+        def size(self):
+            return len(self.items)
+
+    class Stack(LinearDataStructure):
+        """Improved stack data structure"""
 
         def clear(self):
             self.items = []
@@ -68,9 +75,6 @@ class DataStructures(Algorithms):
 
         def peek(self):
             return self.items[len(self.items)-1]
-
-        def size(self):
-            return len(self.items)
 
         def reverse_string(self, string):
             """Reverse a string"""
@@ -107,16 +111,8 @@ class DataStructures(Algorithms):
 
             return new_string
 
-    class Queue:
+    class Queue(LinearDataStructure):
         """FIFO Queue data structure"""
-        def __init__(self):
-            self.items = []
-
-        def __str__(self):
-            return str(self.items)
-
-        def is_empty(self):
-            return self.items == []
 
         def enqueue(self, item):
             return self.items.insert(0, item)
@@ -124,8 +120,20 @@ class DataStructures(Algorithms):
         def dequeue(self):
             return self.items.pop()
 
-        def size(self):
-            return len(self.items)
+    class Deque(LinearDataStructure):
+        """Deque (double-ended queue)"""
+
+        def add_front(self, item):
+            self.items.append(item)
+
+        def add_rear(self, item):
+            self.items.insert(0, item)
+
+        def remove_front(self):
+            return self.items.pop()
+
+        def remove_rear(self):
+            return self.items.pop(0)
 
 
 class Search(Algorithms):
@@ -434,3 +442,18 @@ if __name__ == '__main__':
     queue1.enqueue('Boomshakala!')
     queue1.dequeue()
     print(queue1)
+
+    """Operating on the front and rear of a deque"""
+    deque1 = DataStructures.Deque()
+    print(deque1.is_empty())
+    deque1.add_rear(8)
+    deque1.add_rear('Airplane')
+    deque1.add_front(False)
+    deque1.add_front(4)
+    print(deque1.size())
+    print(deque1)
+    deque1.add_rear(3.14)
+    print(deque1)
+    deque1.remove_rear()
+    deque1.remove_front()
+    print(deque1)
