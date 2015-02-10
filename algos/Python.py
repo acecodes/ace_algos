@@ -343,7 +343,7 @@ class Math(Algorithms):
         if q == 0:
             return p
         r = p % q
-        return Euclid(q, r)
+        return Math.Euclid(q, r)
 
     # Factorial (n!) - recursive
     @staticmethod
@@ -366,7 +366,7 @@ class Math(Algorithms):
     def Fibonacci(n):
         if n <= 1:
             return n
-        return Fibonacci(n - 1) + Fibonacci(n - 2)
+        return Math.Fibonacci(n - 1) + Math.Fibonacci(n - 2)
 
     # Fibonacci (runs in linear time)
     @staticmethod
@@ -374,7 +374,7 @@ class Math(Algorithms):
         if n <= 1:
             return (n, 0)
         else:
-            (a, b) = Fibonacci_improved(n - 1)
+            (a, b) = Math.Fibonacci_improved(n - 1)
             return (a + b, a)
 
     @staticmethod
@@ -389,7 +389,7 @@ class Math(Algorithms):
             return lst[0]
         # Move through the list recursively
         else:
-            return lst[0] + listsum(lst[1:])
+            return lst[0] + Math.listsum(lst[1:])
 
 
 class Sorting(Algorithms):
@@ -403,8 +403,8 @@ class Sorting(Algorithms):
         left_side = array[:midpoint]
         right_side = array[midpoint:]
 
-        merge_sort(left_side)
-        merge_sort(right_side)
+        Sorting.merge_sort(left_side)
+        Sorting.merge_sort(right_side)
 
         left_count = 0
         right_count = 0
