@@ -26,6 +26,24 @@ class Recursion(Algorithms):
             return s
         return Recursion.recur_reverse(s[-1]) + Recursion.recur_reverse(s[:-1])
 
+    @staticmethod
+    def recur_palindrome(s):
+        """Recursively check if string is palindrome"""
+
+        def remove_white(s):
+            """Remove white spaces"""
+            return ''.join([x for x in s if x is not ' '])
+
+        s = remove_white(s.lower())
+
+        if len(s) <= 1:
+            return True
+        if s[0] != s[-1]:
+            return False
+        else:
+            return True
+        return Recursion.isPal(s[0]) + Recursion.isPal(s[:1])
+
 
 class DataStructures(Algorithms):
 
@@ -616,3 +634,8 @@ if __name__ == '__main__':
     """Recursively reverse string"""
     print(Recursion.recur_reverse('Hello'))
     print(Recursion.recur_reverse('Sandwich'))
+
+    """Recursively check if string is palindrome"""
+    print(Recursion.recur_palindrome('Hello'))
+    print(Recursion.recur_palindrome('Bob'))
+    print(Recursion.recur_palindrome('B o b'))
