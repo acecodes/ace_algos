@@ -17,6 +17,16 @@ class Algorithms:
         return being_tested.timeit(algo)
 
 
+class Recursion(Algorithms):
+
+    @staticmethod
+    def recur_reverse(s):
+        """Recursively reverse a string"""
+        if len(s) <= 1:
+            return s
+        return Recursion.recur_reverse(s[-1]) + Recursion.recur_reverse(s[:-1])
+
+
 class DataStructures(Algorithms):
 
     class ArrayStack:
@@ -602,3 +612,7 @@ if __name__ == '__main__':
     ordered1.add(12)
     ordered1.add(5)
     print(ordered1.search(5))
+
+    """Recursively reverse string"""
+    print(Recursion.recur_reverse('Hello'))
+    print(Recursion.recur_reverse('Sandwich'))
