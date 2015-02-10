@@ -211,10 +211,51 @@ class DataStructures(Algorithms):
                     previous = current
                     current = current.get_next()
 
-            if previous == None:
+            if previous is None:
                 self.head = current.get_next()
             else:
                 previous.set_next(current.get_next())
+
+    class OrderedList:
+        """Ordered list"""
+        def __init__(self):
+            self.head = None
+
+        def search(self, item):
+            current = self.head
+            found = False
+            stop = False
+
+            while current is not None and not found and not stop:
+                if current.get_data() == item:
+                    found = True
+                else:
+                    if current.get_data() > item:
+                        stop = True
+                    else:
+                        current = current.get_next()
+
+            return found
+
+        def add(self, item):
+            current = self.head
+            previous = None
+            stop = False
+
+            while current is not None and not stop:
+                if current.get_data() > item:
+                    stop = True
+                else:
+                    previous = current
+                    current = current.get_next()
+
+            temp = DataStructures.Node(item)
+            if previous is None:
+                temp.set_next(self.head)
+                self.head = temp
+            else:
+                temp.set_next(current)
+                previous.set_next(temp)
 
 
 class Search(Algorithms):
@@ -553,3 +594,11 @@ if __name__ == '__main__':
     print(linked1.search(2))
     linked1.remove(15)
     print(linked1.size())
+
+    """Ordered list"""
+    ordered1 = DataStructures.OrderedList()
+    ordered1.add(10)
+    ordered1.add(25)
+    ordered1.add(12)
+    ordered1.add(5)
+    print(ordered1.search(5))
