@@ -45,6 +45,20 @@ class Recursion(Algorithms):
         return Recursion.isPal(s[0]) + Recursion.isPal(s[:1])
 
 
+class Hash(Algorithms):
+
+    """Hashing algorithms"""
+
+    @staticmethod
+    def ord_hash(str1, table_size):
+        """Hash strings using ordinals"""
+        total = 0
+        for pos in range(len(str1)):
+            total = total + ord(str1[pos])
+
+        return total % table_size
+
+
 class DataStructures(Algorithms):
 
     class ArrayStack:
@@ -76,7 +90,9 @@ class DataStructures(Algorithms):
             return self._data.pop()
 
     class LinearDataStructure:
+
         """Base class to be used by stacks, queues and deques"""
+
         def __init__(self):
             self.items = []
 
@@ -90,6 +106,7 @@ class DataStructures(Algorithms):
             return len(self.items)
 
     class Stack(LinearDataStructure):
+
         """Improved stack data structure"""
 
         def clear(self):
@@ -102,7 +119,7 @@ class DataStructures(Algorithms):
             return self.items.pop()
 
         def peek(self):
-            return self.items[len(self.items)-1]
+            return self.items[len(self.items) - 1]
 
         def reverse_string(self, string):
             """Reverse a string"""
@@ -140,6 +157,7 @@ class DataStructures(Algorithms):
             return new_string
 
     class Queue(LinearDataStructure):
+
         """FIFO Queue data structure"""
 
         def enqueue(self, item):
@@ -149,6 +167,7 @@ class DataStructures(Algorithms):
             return self.items.pop()
 
     class Deque(LinearDataStructure):
+
         """Deque (double-ended queue)"""
 
         def add_front(self, item):
@@ -178,7 +197,9 @@ class DataStructures(Algorithms):
             return still_equal
 
     class Node:
+
         """Node for linked list implementation"""
+
         def __init__(self, init_data):
             self.data = init_data
             self.next = None
@@ -196,7 +217,9 @@ class DataStructures(Algorithms):
             self.next = new_next
 
     class UnorderedList:
+
         """Unordered (linked) list"""
+
         def __init__(self):
             self.head = None
 
@@ -245,7 +268,9 @@ class DataStructures(Algorithms):
                 previous.set_next(current.get_next())
 
     class OrderedList:
+
         """Ordered list"""
+
         def __init__(self):
             self.head = None
 
@@ -284,6 +309,67 @@ class DataStructures(Algorithms):
             else:
                 temp.set_next(current)
                 previous.set_next(temp)
+
+    class HashTable:
+
+        """Hash table implementation"""
+
+        def __init__(self):
+            self.size = 11
+            self.slots = [None] * self.size
+            self.data = [None] * self.size
+
+        def put(self, key, data):
+            hashvalue = self.hashfunction(key, len(self.slots))
+
+            if self.slots[hashvalue] == None:
+                self.slots[hashvalue] = key
+                self.data[hashvalue] = data
+
+            else:
+                if self.slots[hashvalue] == key:
+                    self.data[hashvalue] = data  # Replace
+                else:
+                    next_slot = self.rehash(hashvalue, len(self.slots))
+                    while self.slots[next_slot] != None and \
+                            self.slots[next_slot] != key:
+                        next_slot = self.rehash(next_slot, len(self.slots))
+                    if self.slots[next_slot] == None:
+                        self.slots[next_slot] = key
+                        self.data[next_slot] = data
+                    else:
+                        self.data[next_slot] = data  # Replace
+
+        def get(self, key):
+            start_slot = self.hashfunction(key, len(self.slots))
+
+            data = None
+            stop = False
+            found = False
+            position = start_slot
+            while self.slots[position] != None and \
+                    not found and not stop:
+                if self.slots[position] == key:
+                    found = True
+                    data = self.data[position]
+                else:
+                    position = self.rehash(position, len(self.slots))
+                    if position == start_slot:
+                        stop = True
+
+            return data
+
+        def __getitem__(self, key):
+            return self.get(key)
+
+        def __setitem__(self, key, data):
+            self.put(key, data)
+
+        def hashfunction(self, key, size):
+            return key % size
+
+        def rehash(self, oldhash, size):
+            return (oldhash + 1) % size
 
 
 class Search(Algorithms):
@@ -543,99 +629,114 @@ def measure_dynamic_array(n):
         data.append(None)
 
 
+"""Experimentation area - uncomment areas of interest"""
 if __name__ == '__main__':
-    print(Math.test(Math.factorial(10)))  # Test speed of factorial function
+    # print(Math.test(Math.factorial(10)))  # Test speed of factorial function
     # Generate a valid key sum for a check digit
-    print(Generation.Luhn_digit(7992739871))
+    # print(Generation.Luhn_digit(7992739871))
     # Check a valid digit and key - should return True
-    print(Generation.Luhn_check(7992739871, 3))
+    # print(Generation.Luhn_check(7992739871, 3))
     # Check an invalid digit and key - should return False
-    print(Generation.Luhn_check(7992739871, 2))
+    # print(Generation.Luhn_check(7992739871, 2))
 
-    """Testing out the Caesar cipher"""
-    CC = Crypto.CaesarCipher(5)
-    test_message = 'The proof is in the pudding'
-    encrypted_message = CC.encrypt(test_message)
-    print(encrypted_message)
-    decrypted_message = CC.decrypt(encrypted_message)
-    print(decrypted_message)
-    print(CC.encrypt('Hello world'))
+    # """Testing out the Caesar cipher"""
+    # CC = Crypto.CaesarCipher(5)
+    # test_message = 'The proof is in the pudding'
+    # encrypted_message = CC.encrypt(test_message)
+    # print(encrypted_message)
+    # decrypted_message = CC.decrypt(encrypted_message)
+    # print(decrypted_message)
+    # print(CC.encrypt('Hello world'))
 
-    """Using my stack"""
-    stack1 = DataStructures.ArrayStack()
-    stack1.push('abc')
-    print(stack1.pop())
+    # """Using my stack"""
+    # stack1 = DataStructures.ArrayStack()
+    # stack1.push('abc')
+    # print(stack1.pop())
 
-    """Using improved stack"""
-    stack2 = DataStructures.Stack()
-    stack2.push('abc')
-    print(stack2.pop())
+    # """Using improved stack"""
+    # stack2 = DataStructures.Stack()
+    # stack2.push('abc')
+    # print(stack2.pop())
 
-    """Reverse string using stack"""
-    stack3 = DataStructures.Stack()
-    print(stack3.reverse_string('ABC'))
+    # """Reverse string using stack"""
+    # stack3 = DataStructures.Stack()
+    # print(stack3.reverse_string('ABC'))
 
-    """Convert decimal numbers to binary"""
-    stack4 = DataStructures.Stack()
-    print(stack4.decimal2binary(5))
+    # """Convert decimal numbers to binary"""
+    # stack4 = DataStructures.Stack()
+    # print(stack4.decimal2binary(5))
 
-    """Convert decimal numbers to other bases"""
-    stack5 = DataStructures.Stack()
-    print(stack5.base_convert(25, 8))
-    print(stack5.base_convert(256, 16))
-    print(stack5.base_convert(26, 26))
+    # """Convert decimal numbers to other bases"""
+    # stack5 = DataStructures.Stack()
+    # print(stack5.base_convert(25, 8))
+    # print(stack5.base_convert(256, 16))
+    # print(stack5.base_convert(26, 26))
 
-    """Take my queue data structure for a spin"""
-    queue1 = DataStructures.Queue()
-    queue1.enqueue(5)
-    queue1.enqueue(True)
-    queue1.enqueue('Boomshakala!')
-    queue1.dequeue()
-    print(queue1)
+    # """Take my queue data structure for a spin"""
+    # queue1 = DataStructures.Queue()
+    # queue1.enqueue(5)
+    # queue1.enqueue(True)
+    # queue1.enqueue('Boomshakala!')
+    # queue1.dequeue()
+    # print(queue1)
 
-    """Operating on the front and rear of a deque"""
-    deque1 = DataStructures.Deque()
-    print(deque1.is_empty())
-    deque1.add_rear(8)
-    deque1.add_rear('Airplane')
-    deque1.add_front(False)
-    deque1.add_front(4)
-    print(deque1.size())
-    print(deque1)
-    deque1.add_rear(3.14)
-    print(deque1)
-    deque1.remove_rear()
-    deque1.remove_front()
-    print(deque1)
+    # """Operating on the front and rear of a deque"""
+    # deque1 = DataStructures.Deque()
+    # print(deque1.is_empty())
+    # deque1.add_rear(8)
+    # deque1.add_rear('Airplane')
+    # deque1.add_front(False)
+    # deque1.add_front(4)
+    # print(deque1.size())
+    # print(deque1)
+    # deque1.add_rear(3.14)
+    # print(deque1)
+    # deque1.remove_rear()
+    # deque1.remove_front()
+    # print(deque1)
 
-    """Palindrome check using deque"""
-    deque2 = DataStructures.Deque()
-    print(deque2.palindrome_checker('radar'))
-    print(deque2.palindrome_checker('steve'))
+    # """Palindrome check using deque"""
+    # deque2 = DataStructures.Deque()
+    # print(deque2.palindrome_checker('radar'))
+    # print(deque2.palindrome_checker('steve'))
 
-    """Linked list"""
-    linked1 = DataStructures.UnorderedList()
-    linked1.add(15)
-    linked1.add(22)
-    print(linked1.size())
-    print(linked1.search(22))
-    print(linked1.search(2))
-    linked1.remove(15)
-    print(linked1.size())
+    # """Linked list"""
+    # linked1 = DataStructures.UnorderedList()
+    # linked1.add(15)
+    # linked1.add(22)
+    # print(linked1.size())
+    # print(linked1.search(22))
+    # print(linked1.search(2))
+    # linked1.remove(15)
+    # print(linked1.size())
 
-    """Ordered list"""
-    ordered1 = DataStructures.OrderedList()
-    ordered1.add(10)
-    ordered1.add(25)
-    ordered1.add(12)
-    ordered1.add(5)
-    print(ordered1.search(5))
+    # """Ordered list"""
+    # ordered1 = DataStructures.OrderedList()
+    # ordered1.add(10)
+    # ordered1.add(25)
+    # ordered1.add(12)
+    # ordered1.add(5)
+    # print(ordered1.search(5))
 
-    """Recursively reverse string"""
-    print(Recursion.recur_reverse('Hello'))
-    print(Recursion.recur_reverse('Sandwich'))
+    # """Recursively reverse string"""
+    # print(Recursion.recur_reverse('Hello'))
+    # print(Recursion.recur_reverse('Sandwich'))
 
-    """Recursively check if string is palindrome"""
-    print(Recursion.recur_palindrome('Hello'))
-    print(Recursion.recur_palindrome('Bob'))
-    print(Recursion.recur_palindrome('B o b'))
+    # """Recursively check if string is palindrome"""
+    # print(Recursion.recur_palindrome('Hello'))
+    # print(Recursion.recur_palindrome('Bob'))
+    # print(Recursion.recur_palindrome('B o b'))
+
+    """Hashing algorithms and data structures"""
+    print(Hash.ord_hash('a', 10))
+    HT = DataStructures.HashTable()
+    HT[10] = 'Cow'
+    HT[5] = 'Table'
+    HT[7] = 'Moose'
+    HT[34] = 'Airplane'
+    HT[83] = 'Nose'
+    print(HT.slots)
+    print(HT.data)
+    HT[10] = 'Bull'
+    HT[7] = 'Elk'
+    print(HT.data)
