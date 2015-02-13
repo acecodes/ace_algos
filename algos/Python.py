@@ -373,10 +373,10 @@ class DataStructures(Algorithms):
 
 
 class Search(Algorithms):
-    # Linear search
 
     @staticmethod
     def linear_search(values, target):
+        """Linear search - O(n)"""
         i = 0
         for item in values:
             if values[i] == target:
@@ -386,8 +386,8 @@ class Search(Algorithms):
         return -1
 
     @staticmethod
-    # Binary search
     def binary_search(data, target, low, high):
+        """Binary search - Recursive, O(log n)"""
 
         if low > high:
             return False
@@ -398,15 +398,14 @@ class Search(Algorithms):
                 return True
             elif target < data[mid]:
                 # Recur on the left side of the array
-                return binary_search(data, target, low, mid - 1)
+                return Search.binary_search(data, target, low, mid - 1)
             else:
                 # Recur on the right side of the array
-                return binary_search(data, target, mid + 1, high)
+                return Search.binary_search(data, target, mid + 1, high)
 
     @staticmethod
-    # Binary search with iteration
     def binary_search_iter(data, target):
-        """Return True if target is found in the given list"""
+        """Binary search - Iterative, O(log n)"""
         low = 0
         high = len(data) - 1
         while low <= high:
@@ -421,42 +420,41 @@ class Search(Algorithms):
 
 
 class Math(Algorithms):
-    # Euclid's algorithm
-    # Finds the greatest common factor (GCF) between two numbers
 
     @staticmethod
     def Euclid(p, q):
+        """Euclidean algorithm - Finds GCF between two numbers"""
         if q == 0:
             return p
         r = p % q
         return Math.Euclid(q, r)
 
-    # Factorial (n!) - recursive
     @staticmethod
     def factorial(n):
+        """Factorial - Recursive"""
         if n == 0 or n == 1:
             return 1
         return n * Math.factorial(n - 1)
 
-    # Factorial (n!) - iterative
     @staticmethod
     def factorial_i(n):
+        """Factorial - Iterative"""
         result = 1
         while n > 1:
             result = result * n
             n -= 1
         return result
 
-    # Fibonacci (runs in quadratic time)
     @staticmethod
     def Fibonacci(n):
+        """Fibonacci - O(n^2)"""
         if n <= 1:
             return n
         return Math.Fibonacci(n - 1) + Math.Fibonacci(n - 2)
 
-    # Fibonacci (runs in linear time)
     @staticmethod
     def Fibonacci_improved(n):
+        """Fibonacci - O(n)"""
         if n <= 1:
             return (n, 0)
         else:
@@ -467,9 +465,9 @@ class Math(Algorithms):
     def sum_of_nums_from_string(string):
         return sum([float(x) for x in string.split(',')])
 
-    # Recursively sum up a list of numbers
     @staticmethod
     def listsum(lst):
+        """Recrusive list summing"""
         # Define a base case
         if len(lst) == 1:
             return lst[0]
@@ -479,11 +477,11 @@ class Math(Algorithms):
 
 
 class Sorting(Algorithms):
-    # Merge sort
 
     @staticmethod
     def merge_sort(array):
-        if len(array) == 1 or len(array) == 0:
+        """Merge sort - Recursive, O(n log n)"""
+        if len(array) <= 1:
             return array
         midpoint = len(array) / 2
         left_side = array[:midpoint]
@@ -517,9 +515,9 @@ class Sorting(Algorithms):
 
         return array
 
-    # A simple insertion sort (O(n^2)) algorithm
     @staticmethod
     def insertion_sort(q):
+        """Insertion sort - O(n^2)"""
         for i in range(1, len(q)):
             current = q[i]
             j = i
@@ -530,23 +528,24 @@ class Sorting(Algorithms):
 
 
 class Generation(Algorithms):
-    # Luhn's algorith, for generating and validating number sequences
-    # AKA mod 10 algorithm
-
-    # Generate a proper sum for a given sequence
+    """Luhn's algorith, for generating and validating number sequences
+    AKA mod 10 algorithm"""
 
     @staticmethod
     def Luhn(digits):
+        """Generate a proper sum for a given sequence"""
         # Ensure that the data entered can become a list
         if type(digits) != 'str':
             digits = str(digits)
 
         # Convert data entered
         digits = [int(x) for x in digits]
+        """
+        Run heart of the algorithm, a description of which can be
+        found on Wikipedia:
 
-        # Run heart of the algorithm, a description of which can be found on Wikipedia:
-        # https://en.wikipedia.org/wiki/Luhn_algorithm
-
+        https://en.wikipedia.org/wiki/Luhn_algorithm
+        """
         for chars in digits[-1::-2]:
             if chars * 2 > 9:
                 subscript = digits.index(chars)
@@ -560,14 +559,14 @@ class Generation(Algorithms):
 
         return sum(digits)
 
-    # Generate a check digit
     @staticmethod
     def Luhn_digit(digits):
+        """Generate a check digit"""
         return str(Generation.Luhn(digits) * 9)[-1]
 
-    # See if a sequence of digits and a key match up
     @staticmethod
     def Luhn_check(digits, check):
+        """See if a sequence of digits and a key match up"""
         return (Generation.Luhn(digits) + check) % 10 == 0
 
     @staticmethod
