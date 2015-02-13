@@ -526,6 +526,28 @@ class Sorting(Algorithms):
                 j -= 1
             q[j] = current
 
+    @staticmethod
+    def bubble_sort(a_list):
+        """Bubble sort - O(n^2)"""
+        for i in range(len(a_list)-1, 0, -1):
+            for j in range(i):
+                if a_list[j] > a_list[j+1]:
+                    temp = a_list[j]
+                    a_list[j] = a_list[j+1]
+                    a_list[j+1] = temp
+
+    @staticmethod
+    def selection_sort(a_list):
+        """Selection sort - O(n^2)"""
+        for i in range(len(a_list)-1, 0, -1):
+            max_position = 0
+            for j in range(1, i+1):
+                if a_list[j] > a_list[max_position]:
+                    max_position = j
+            temp = a_list[i]
+            a_list[i] = a_list[max_position]
+            a_list[max_position] = temp
+
 
 class Generation(Algorithms):
     """Luhn's algorith, for generating and validating number sequences
@@ -726,16 +748,26 @@ if __name__ == '__main__':
     # print(Recursion.recur_palindrome('Bob'))
     # print(Recursion.recur_palindrome('B o b'))
 
-    """Hashing algorithms and data structures"""
-    print(Hash.ord_hash('a', 10))
-    HT = DataStructures.HashTable()
-    HT[10] = 'Cow'
-    HT[5] = 'Table'
-    HT[7] = 'Moose'
-    HT[34] = 'Airplane'
-    HT[83] = 'Nose'
-    print(HT.slots)
-    print(HT.data)
-    HT[10] = 'Bull'
-    HT[7] = 'Elk'
-    print(HT.data)
+    # """Hashing algorithms and data structures"""
+    # print(Hash.ord_hash('a', 10))
+    # HT = DataStructures.HashTable()
+    # HT[10] = 'Cow'
+    # HT[5] = 'Table'
+    # HT[7] = 'Moose'
+    # HT[34] = 'Airplane'
+    # HT[83] = 'Nose'
+    # print(HT.slots)
+    # print(HT.data)
+    # HT[10] = 'Bull'
+    # HT[7] = 'Elk'
+    # print(HT.data)
+
+    # """Bubble sort"""
+    # test_list = [4, 2, 5, 6, 20, 18, 30, 28, 50]
+    # Sorting.bubble_sort(test_list)
+    # print(test_list)
+
+    """Selection sort"""
+    test_list = [4, 2, 5, 6, 20, 18, 30, 28, 50]
+    Sorting.selection_sort(test_list)
+    print(test_list)
