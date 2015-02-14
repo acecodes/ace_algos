@@ -2,6 +2,8 @@
 from __future__ import print_function
 from timeit import Timer
 
+import operator
+
 
 class Exceptions:
 
@@ -372,7 +374,9 @@ class DataStructures(Algorithms):
             return (oldhash + 1) % size
 
     class BinaryTree:
+
         """Binary tree"""
+
         def __init__(self, root_obj):
             self.key = root_obj
             self.left_child = None
@@ -414,7 +418,56 @@ class DataStructures(Algorithms):
 
         def __str__(self):
             return str([self.key, [self.left_child],
-                       [self.right_child]])
+                        [self.right_child]])
+
+        @staticmethod
+        def build_parse_tree(fp_exp):
+            """Use Stack and BinaryTree data structures to parse equations"""
+            symbols = ['+', '-', '*', '/', ')']
+            fp_list = fp_exp.split()
+            p_stack = DataStructures.Stack()
+            e_tree = DataStructures.BinaryTree('')
+            p_stack.push(e_tree)
+            current_tree = e_tree
+            for i in fp_list:
+                if i == '(':
+                    current_tree.insert_left('')
+                    p_stack.push(current_tree)
+                    current_tree = current_tree.get_left_child()
+                elif i not in symbols:
+                    current_tree.set_root(int(i))
+                    parent = p_stack.pop()
+                    current_tree = parent
+                elif i in symbols[:-1]:
+                    current_tree.set_root(i)
+                    current_tree.insert_right('')
+                    p_stack.push(current_tree)
+                    current_tree = current_tree.get_right_child()
+                elif i == ')':
+                    current_tree = p_stack.pop()
+                else:
+                    raise ValueError
+            return e_tree
+
+        @staticmethod
+        def evaluate(parse_tree):
+            """Recursively evaluate parse tree"""
+            opers = {
+                '+': operator.add,
+                '-': operator.sub,
+                '*': operator.mul,
+                '/': operator.truediv,
+            }
+
+            left_child = parse_tree.get_left_child()
+            right_child = parse_tree.get_right_child()
+
+            if left_child and right_child:
+                fn = opers[parse_tree.get_root()]
+                return fn(DataStructures.BinaryTree.evaluate(left_child),
+                          DataStructures.BinaryTree.evaluate(right_child))
+            else:
+                return parse_tree.get_root()
 
 
 class Search(Algorithms):
@@ -640,6 +693,7 @@ class Sorting(Algorithms):
 
 
 class Generation(Algorithms):
+
     """Luhn's algorith, for generating and validating number sequences
     AKA mod 10 algorithm"""
 
@@ -738,7 +792,6 @@ def measure_dynamic_array(n):
         b = sys.getsizeof(data)
         print("Length: {0:3d}; Size in bytes: {1:4d}".format(a, b))
         data.append(None)
-
 
 
 """Experimentation area - uncomment areas of interest"""
@@ -875,3 +928,7 @@ if __name__ == '__main__':
     tree.insert_right('c')
     print("Left child:", tree.get_left_child())
     print("Right child:", tree.get_right_child())
+
+    """Build a parse tree, then evaluate it"""
+    parse_tree1 = DataStructures.BinaryTree.build_parse_tree("( ( 10 + 5 ) * 3 )")
+    print(DataStructures.BinaryTree.evaluate(parse_tree1))  # 45
