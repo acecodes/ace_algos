@@ -371,6 +371,51 @@ class DataStructures(Algorithms):
         def rehash(self, oldhash, size):
             return (oldhash + 1) % size
 
+    class BinaryTree:
+        """Binary tree"""
+        def __init__(self, root_obj):
+            self.key = root_obj
+            self.left_child = None
+            self.right_child = None
+
+        def insert_left(self, new_node):
+            """Insert into left side of binary tree"""
+            if self.left_child is None:
+                self.left_child = DataStructures.BinaryTree(new_node)
+            else:
+                tree = DataStructures.BinaryTree(new_node)
+                tree.left_child = self.left_child
+                self.left_child = tree
+
+        def insert_right(self, new_node):
+            """Insert into right side of binary tree"""
+            if self.right_child is None:
+                self.right_child = DataStructures.BinaryTree(new_node)
+            else:
+                tree = DataStructures.BinaryTree(new_node)
+                tree.right_child = self.right_child
+                self.right_child = tree
+
+        def get_right_child(self):
+            """Return right child of binary tree"""
+            return self.right_child
+
+        def get_left_child(self):
+            """Return left child of binary tree"""
+            return self.left_child
+
+        def set_root(self, new_root):
+            """Set new root node for binary tree"""
+            self.key = new_root
+
+        def get_root(self):
+            """Return root node for binary tree"""
+            return self.key
+
+        def __str__(self):
+            return str([self.key, [self.left_child],
+                       [self.right_child]])
+
 
 class Search(Algorithms):
 
@@ -529,24 +574,69 @@ class Sorting(Algorithms):
     @staticmethod
     def bubble_sort(a_list):
         """Bubble sort - O(n^2)"""
-        for i in range(len(a_list)-1, 0, -1):
+        for i in range(len(a_list) - 1, 0, -1):
             for j in range(i):
-                if a_list[j] > a_list[j+1]:
+                if a_list[j] > a_list[j + 1]:
                     temp = a_list[j]
-                    a_list[j] = a_list[j+1]
-                    a_list[j+1] = temp
+                    a_list[j] = a_list[j + 1]
+                    a_list[j + 1] = temp
 
     @staticmethod
     def selection_sort(a_list):
         """Selection sort - O(n^2)"""
-        for i in range(len(a_list)-1, 0, -1):
+        for i in range(len(a_list) - 1, 0, -1):
             max_position = 0
-            for j in range(1, i+1):
+            for j in range(1, i + 1):
                 if a_list[j] > a_list[max_position]:
                     max_position = j
             temp = a_list[i]
             a_list[i] = a_list[max_position]
             a_list[max_position] = temp
+
+    @staticmethod
+    def quicksort(a_list):
+        """Quicksort - Amortized: O(n log n), Worst: O(n^2)"""
+        Sorting.quicksort_helper(a_list, 0, len(a_list) - 1)
+
+    @staticmethod
+    def quicksort_helper(a_list, first, last):
+        if first < last:
+            split_point = Sorting.partition(a_list, first, last)
+
+            Sorting.quicksort_helper(a_list, first, split_point - 1)
+            Sorting.quicksort_helper(a_list, split_point + 1, last)
+
+    @staticmethod
+    def partition(a_list, first, last):
+        pivot_value = a_list[first]
+
+        left_mark = first + 1
+        right_mark = last
+
+        done = False
+        while not done:
+
+            while left_mark <= right_mark and \
+                    a_list[left_mark] <= pivot_value:
+                left_mark = left_mark + 1
+
+            while a_list[right_mark] >= pivot_value and \
+                    right_mark >= left_mark:
+                right_mark = right_mark - 1
+
+            if right_mark < left_mark:
+                done = True
+
+            else:
+                temp = a_list[left_mark]
+                a_list[left_mark] = a_list[right_mark]
+                a_list[right_mark] = temp
+
+        temp = a_list[first]
+        a_list[first] = a_list[right_mark]
+        a_list[right_mark] = temp
+
+        return right_mark
 
 
 class Generation(Algorithms):
@@ -648,6 +738,7 @@ def measure_dynamic_array(n):
         b = sys.getsizeof(data)
         print("Length: {0:3d}; Size in bytes: {1:4d}".format(a, b))
         data.append(None)
+
 
 
 """Experimentation area - uncomment areas of interest"""
@@ -767,7 +858,20 @@ if __name__ == '__main__':
     # Sorting.bubble_sort(test_list)
     # print(test_list)
 
-    """Selection sort"""
-    test_list = [4, 2, 5, 6, 20, 18, 30, 28, 50]
-    Sorting.selection_sort(test_list)
-    print(test_list)
+    # """Selection sort"""
+    # test_list = [4, 2, 5, 6, 20, 18, 30, 28, 50]
+    # Sorting.selection_sort(test_list)
+    # print(test_list)
+
+    # """Quicksort"""
+    # test_list = [4, 2, 5, 6, 20, 18, 30, 28, 50]
+    # Sorting.quicksort(test_list)
+    # print(test_list)
+
+    """Binary tree"""
+    tree = DataStructures.BinaryTree('a')
+    print("Root of binary tree:", tree.get_root())
+    tree.insert_left('b')
+    tree.insert_right('c')
+    print("Left child:", tree.get_left_child())
+    print("Right child:", tree.get_right_child())
