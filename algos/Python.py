@@ -469,6 +469,66 @@ class DataStructures(Algorithms):
             else:
                 return parse_tree.get_root()
 
+    class BinHeap:
+        """Binary min heap data structure"""
+
+        def __init__(self):
+            self.heap_list = [0]
+            self.current_size = 0
+
+        def build_heap(self, a_list):
+            """Build a heap from a list"""
+            item = len(a_list) // 2
+            self.current_size = len(a_list)
+            self.heap_list = [0] + a_list[:]
+            while (item > 0):
+                self.move_down(item)
+                item = item - 1
+
+        def move_up(self, item):
+            """Move a node up the heap"""
+            while item // 2 > 0:
+                if self.heap_list[item] < self.heap_list[item // 2]:
+                    temp = self.heap_list[item // 2]
+                    self.heap_list[item // 2] = self.heap_list[item]
+                    self.heap_list[item] = temp
+                item = item // 2
+
+        def move_down(self, item):
+            """Move a node down the heap"""
+            while (item * 2) <= self.current_size:
+                min_child = self.min_child(item)
+                if self.heap_list[item] > self.heap_list[min_child]:
+                    temp = self.heap_list[item]
+                    self.heap_list[item] = self.heap_list[min_child]
+                    self.heap_list[min_child] = temp
+                item = min_child
+
+        def min_child(self, item):
+            """Get the smallest value in the heap"""
+            if item * 2 + 1 > self.current_size:
+                return item * 2
+            else:
+                if self.heap_list[item*2] < self.heap_list[item*2 + 1]:
+                    return item * 2
+                else:
+                    return item * 2 + 1
+
+        def insert(self, item):
+            """Insert an element and maintain (min) heap property"""
+            self.heap_list.append(item)
+            self.current_size = self.current_size + 1
+            self.move_up(self.current_size)
+
+        def del_min(self):
+            """Remove the smallest value in the heap"""
+            return_value = self.heap_list[1]
+            self.heap_list[1] = self.heap_list[self.current_size]
+            self.current_size = self.current_size - 1
+            self.heap_list.pop()
+            self.move_down(1)
+            return return_value
+
 
 class Search(Algorithms):
 
@@ -946,18 +1006,23 @@ if __name__ == '__main__':
     # Sorting.quicksort(test_list)
     # print(test_list)
 
-    """Binary tree"""
-    tree = DataStructures.BinaryTree('a')
-    print("Root of binary tree:", tree.get_root())
-    tree.insert_left('b')
-    tree.insert_left('f')
-    tree.insert_right('c')
-    tree.insert_right('e')
-    print("Left child:", tree.get_left_child())
-    print("Right child:", tree.get_right_child())
-    Search.inorder(tree)
+    # """Binary tree"""
+    # tree = DataStructures.BinaryTree('a')
+    # print("Root of binary tree:", tree.get_root())
+    # tree.insert_left('b')
+    # tree.insert_left('f')
+    # tree.insert_right('c')
+    # tree.insert_right('e')
+    # print("Left child:", tree.get_left_child())
+    # print("Right child:", tree.get_right_child())
+    # Search.inorder(tree)
 
 
-    """Build a parse tree, then evaluate it"""
-    parse_tree1 = DataStructures.BinaryTree.build_parse_tree("( ( 10 + 5 ) * 3 )")
-    print(DataStructures.BinaryTree.evaluate(parse_tree1))  # 45
+    # """Build a parse tree, then evaluate it"""
+    # parse_tree1 = DataStructures.BinaryTree.build_parse_tree("( ( 10 + 5 ) * 3 )")
+    # print(DataStructures.BinaryTree.evaluate(parse_tree1))  # 45
+
+    """Binary min heap"""
+    min_heap = DataStructures.BinHeap()
+    min_heap.build_heap([5, 8, 2, 4, 9, 12])
+    print(min_heap.heap_list)
