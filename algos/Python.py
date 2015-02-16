@@ -473,6 +473,31 @@ class DataStructures(Algorithms):
 class Search(Algorithms):
 
     @staticmethod
+    def preorder(tree):
+        """Pre-order tree traversal"""
+        if tree:
+            print(tree.get_root())
+            Search.preorder(tree.get_left_child())
+            Search.preorder(tree.get_right_child())
+
+    @staticmethod
+    def postorder(tree):
+        """Post-order tree traversal"""
+        if tree is not None:
+            Search.postorder(tree.get_left_child())
+            Search.postorder(tree.get_right_child())
+            print(tree.get_root())
+
+    @staticmethod
+    def inorder(tree):
+        """In-order tree traversal"""
+        if tree is not None:
+            Search.inorder(tree.get_left_child())
+            print(tree.get_root())
+            Search.inorder(tree.get_right_child())
+
+
+    @staticmethod
     def linear_search(values, target):
         """Linear search - O(n)"""
         i = 0
@@ -925,9 +950,13 @@ if __name__ == '__main__':
     tree = DataStructures.BinaryTree('a')
     print("Root of binary tree:", tree.get_root())
     tree.insert_left('b')
+    tree.insert_left('f')
     tree.insert_right('c')
+    tree.insert_right('e')
     print("Left child:", tree.get_left_child())
     print("Right child:", tree.get_right_child())
+    Search.inorder(tree)
+
 
     """Build a parse tree, then evaluate it"""
     parse_tree1 = DataStructures.BinaryTree.build_parse_tree("( ( 10 + 5 ) * 3 )")
