@@ -20,3 +20,15 @@ function Fibonacci(n) {
 	else { return Fibonacci(n-1) + Fibonacci(n-2); }
 
 };
+
+// Palindrome checker
+function palindrome(str) {
+  newstr = str.toLowerCase();
+  if (newstr[0] !== newstr.slice(-1)) {
+    return false;
+  }
+  else {
+    return true;
+  }
+   return palindrome(newstr[0]) + palindrome(newstr[newstr.slice(-1)]);
+  }
