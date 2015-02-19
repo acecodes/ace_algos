@@ -540,6 +540,7 @@ class DataStructures(Algorithms):
             self.left_child = left
             self.right_child = right
             self.parent = parent
+            self.balance_factor = 0
 
         def __iter__(self):
             if self:
@@ -773,6 +774,93 @@ class DataStructures(Algorithms):
                             current_node.right_child.right_child,
                             )
 
+    class AVLTree(BinarySearchTree):
+        """AVL (self-balancing) binary search tree"""
+
+        def _put(self, key, value, current_node):
+            if key < current_node.key:
+                if current_node.has_left_child():
+                    self._put(key, value, current_node.left_child)
+                else:
+                    current_node.left_child = DataStructures.TreeNode(
+                        key, value, parent=current_node)
+                    self.update_balance(current_node.left_child)
+            else:
+                if current_node.has_right_child():
+                    self._put(key, value, current_node.right_child)
+                else:
+                    current_node.right_child = DataStructures.TreeNode(
+                        key, value, parent=current_node)
+                    self.update_balance(current_node.right_child)
+
+        def update_balance(self, node):
+            """Check and update balance factor for a node"""
+            if node.balance_factor > 1 or node.balance_factor < -1:
+                self.rebalance(node)
+                return
+            if node.parent is not None:
+                if node.is_left_child():
+                    node.parent.balance_factor += 1
+                elif node.is_right_child():
+                    node.parent.balance_factor -= 1
+
+                if node.parent.balance_factor != 0:
+                    self.update_balance(node.parent)
+
+        def rotate_left(self, rotate_root):
+            """Rotate tree to the left"""
+            new_root = rotate_root.right_child
+            rotate_root.right_child = new_root.left_child
+            if new_root.left_child is not None:
+                new_root.left_child.parent = rotate_root
+            new_root.parent = rotate_root.parent
+            if rotate_root.is_root():
+                self.root = new_root
+            else:
+                if rotate_root.is_left_child():
+                    rotate_root.parent.left_child = new_root
+                else:
+                    rotate_root.parent.right_child = new_root
+
+            new_root.left_child = rotate_root
+            rotate_root.parent = new_root
+            rotate_root.balance_factor = rotate_root.balance_factor + 1 - min(new_root.balance_factor, 0)
+            new_root.balance_factor = new_root.balance_factor + 1 + max(rotate_root.balance_factor, 0)
+
+        def rotate_right(self, rotate_root):
+            """Rotate tree to the right"""
+            new_root = rotate_root.left_child
+            rotate_root.left_child = new_root.right_child
+            if new_root.right_child is not None:
+                new_root.right_child.parent = rotate_root
+            new_root.parent = rotate_root.parent
+            if rotate_root.is_root():
+                self.root = new_root
+            else:
+                if rotate_root.is_right_child():
+                    rotate_root.parent.right_child = new_root
+                else:
+                    rotate_root.parent.left_child = new_root
+
+            new_root.left_child = rotate_root
+            rotate_root.parent = new_root
+            rotate_root.balance_factor = rotate_root.balance_factor + 1 - min(new_root.balance_factor, 0)
+            new_root.balance_factor = new_root.balance_factor + 1 + max(rotate_root.balance_factor, 0)
+
+        def rebalance(self, node):
+            if node.balance_factor < 0:
+                if node.right_child.balance_factor > 0:
+                    self.rotate_right(node.right_child)
+                    self.rotate_left(node)
+                else:
+                    self.rotate_left(node)
+            elif node.balance_factor > 0:
+                if node.left_child.balance_factor < 0:
+                    self.rotate_left(node.left_child)
+                    self.rotate_right(node)
+                else:
+                    self.rotate_right(node)
+
 
 class Search(Algorithms):
 
@@ -799,7 +887,6 @@ class Search(Algorithms):
             Search.inorder(tree.get_left_child())
             print(tree.get_root())
             Search.inorder(tree.get_right_child())
-
 
     @staticmethod
     def linear_search(values, target):
@@ -1271,12 +1358,22 @@ if __name__ == '__main__':
     # min_heap.build_heap([5, 8, 2, 4, 9, 12])
     # print(min_heap.heap_list)
 
-    """Binary search tree"""
-    bst = DataStructures.BinarySearchTree()
-    bst[3] = "Zebra"
-    bst[4] = "Cat"
-    bst[6] = "Antelope"
+    # """Binary search tree"""
+    # bst = DataStructures.BinarySearchTree()
+    # bst[3] = "Zebra"
+    # bst[4] = "Cat"
+    # bst[6] = "Antelope"
 
-    print(bst[3])
-    print(bst[4])
-    print(bst[6])
+    # print(bst[3])
+    # print(bst[4])
+    # print(bst[6])
+
+    """AVL tree"""
+    avl = DataStructures.AVLTree()
+    avl[3] = "F/A-18"
+    avl[4] = "F-117"
+    avl[6] = "C-17"
+
+    print(avl[3])
+    print(avl[4])
+    print(avl[6])
