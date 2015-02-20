@@ -861,6 +861,63 @@ class DataStructures(Algorithms):
                 else:
                     self.rotate_right(node)
 
+    class Vertex:
+        """Vertex for graphs"""
+
+        def __init__(self, key):
+            self.id = key
+            self.connected_to = {}
+
+        def add_neighbor(self, neighbor, weight=0):
+            self.connected_to[neighbor] = weight
+
+        def __str__(self):
+            return str(self.id) + ' connected to: ' + str([x.id for x in self.connected_to])
+
+        def get_connections(self):
+            return self.connected_to.keys()
+
+        def get_id(self):
+            return self.id
+
+        def get_weight(self, neighbor):
+            return self.connected_to[neighbor]
+
+    class Graph:
+        """Graph data structure"""
+
+        def __init__(self):
+            self.vertices_list = {}
+            self.number_of_vertices = 0
+
+        def __iter__(self):
+            return iter(self.vertices_list.values())
+
+        def __contains__(self, node):
+            return node in self.vertices_list
+
+        def add_vertex(self, key):
+            self.number_of_vertices = self.number_of_vertices + 1
+            new_vertex = DataStructures.Vertex(key)
+            self.vertices_list[key] = new_vertex
+            return new_vertex
+
+        def get_vertex(self, node):
+            if node in self.vertices_list:
+                return self.vertices_list
+            else:
+                return None
+
+        def add_edge(self, f, t, weight=0):
+            if f not in self.vertices_list:
+                nv = self.add_vertex(f)
+            if t not in self.vertices_list:
+                nv = self.add_vertex(t)
+            self.vertices_list[f].add_neighbor(self.vertices_list[t], weight)
+
+        def get_vertices(self):
+            return self.vertices_list.keys()
+
 
 class Search(Algorithms):
 
@@ -1368,12 +1425,26 @@ if __name__ == '__main__':
     # print(bst[4])
     # print(bst[6])
 
-    """AVL tree"""
-    avl = DataStructures.AVLTree()
-    avl[3] = "F/A-18"
-    avl[4] = "F-117"
-    avl[6] = "C-17"
+    # """AVL tree"""
+    # avl = DataStructures.AVLTree()
+    # avl[3] = "F/A-18"
+    # avl[4] = "F-117"
+    # avl[6] = "C-17"
 
-    print(avl[3])
-    print(avl[4])
-    print(avl[6])
+    # print(avl[3])
+    # print(avl[4])
+    # print(avl[6])
+
+    """Graph"""
+    graph = DataStructures.Graph()
+    for i in range(5):
+        graph.add_vertex(i)
+    graph.add_edge(0, 4, 1)
+    graph.add_edge(0, 1, 7)
+    graph.add_edge(1, 0, 4)
+    graph.add_edge(2, 1, 5)
+    print(graph.vertices_list)
+
+    for nodes in graph:
+        for weights in nodes.get_connections():
+            print("{}, {}".format(nodes.get_id(), weights.get_id()))
