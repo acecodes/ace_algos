@@ -922,6 +922,46 @@ class DataStructures(Algorithms):
 class Search(Algorithms):
 
     @staticmethod
+    def pos_to_node_id(row, column, board_size):
+        """Convert position on chess board to node number"""
+        board = [[(x + (y * 5)) for x in range(5)] for y in range(5)]
+        return board[row][column]
+
+    @staticmethod
+    def knight_graph(board_size):
+        """Knight's tour graph"""
+        graph = DataStructures.Graph()
+        for row in range(board_size):
+            """Note to self: build the pos_to_node_id function"""
+            for column in range(board_size):
+                node_id = Search.pos_to_node_id(row, column, board_size)
+                new_positions = Search.gen_legal_moves(row, column, board_size)
+                for e in new_positions:
+                    n_id = Search.pos_to_node_id(e[0], e[1], board_size)
+                    graph.add_edge(node_id, n_id)
+        return graph
+
+    @staticmethod
+    def gen_legal_moves(x, y, board_size):
+        new_moves = []
+        move_offsets = [(-1, -2), (-1, 2), (-2, -1), (-2, 1),
+                        (1, -2), (1, 2), (2, -1), (2, 1)]
+        for i in move_offsets:
+            new_x = x + i[0]
+            new_y = y + i[1]
+            if Search.legal_coordinates(new_x, board_size) and \
+               Search.legal_coordinates(new_y, board_size):
+                new_moves.append((new_x, new_y))
+        return new_moves
+
+    @staticmethod
+    def legal_coordinates(x, board_size):
+        if x >= 0 and x < board_size:
+            return True
+        else:
+            return False
+
+    @staticmethod
     def bfs(graph, start):
         """Breadth first search (BFS) for graphs"""
         start.set_distance(0)
@@ -1272,6 +1312,33 @@ class Crypto(Algorithms):
             return ''.join(msg)
 
 
+class Build(Algorithms):
+
+    @staticmethod
+    def build_ladder_graph(word_file):
+        dic = {}
+        graph = DataStructures.Graph()
+        w_file = open(word_file, 'r')
+        """Create buckets of words that are off by one letter"""
+        for line in w_file:
+            word = line[:-1]
+            for i in range(len(word)):
+                bucket = word[:i] + '_' + word[i+1:]
+                if bucket in dic:
+                    dic[bucket].append(word)
+                else:
+                    dic[bucket] = [word]
+
+        """Add nodes and edges for words in the same bucket"""
+        for bucket in dic.keys():
+            for word1 in dic[bucket]:
+                for word2 in dic[bucket]:
+                    if word1 != word2:
+                        graph.add_edge(word1, word2)
+
+        return graph
+
+
 def measure_dynamic_array(n):
     """Measure the number of bytes a dynamic array up to size n-1
     takes up in memory"""
@@ -1283,28 +1350,7 @@ def measure_dynamic_array(n):
         print("Length: {0:3d}; Size in bytes: {1:4d}".format(a, b))
         data.append(None)
 
-def build_ladder_graph(word_file):
-    dic = {}
-    graph = DataStructures.Graph()
-    w_file = open(word_file, 'r')
-    """Create buckets of words that are off by one letter"""
-    for line in w_file:
-        word = line[:-1]
-        for i in range(len(word)):
-            bucket = word[:i] + '_' + word[i+1:]
-            if bucket in dic:
-                dic[bucket].append(word)
-            else:
-                dic[bucket] = [word]
 
-    """Add nodes and edges for words in the same bucket"""
-    for bucket in dic.keys():
-        for word1 in dic[bucket]:
-            for word2 in dic[bucket]:
-                if word1 != word2:
-                graph.add_edge(word1, word2)
-
-    return graph 
 
 
 """Experimentation area - uncomment areas of interest"""
@@ -1475,16 +1521,19 @@ if __name__ == '__main__':
     # print(avl[4])
     # print(avl[6])
 
-    """Graph"""
-    graph = DataStructures.Graph()
-    for i in range(5):
-        graph.add_vertex(i)
-    graph.add_edge(0, 4, 1)
-    graph.add_edge(0, 1, 7)
-    graph.add_edge(1, 0, 4)
-    graph.add_edge(2, 1, 5)
-    print(graph.vertices_list)
+    # """Graph"""
+    # graph = DataStructures.Graph()
+    # for i in range(5):
+    #     graph.add_vertex(i)
+    # graph.add_edge(0, 4, 1)
+    # graph.add_edge(0, 1, 7)
+    # graph.add_edge(1, 0, 4)
+    # graph.add_edge(2, 1, 5)
+    # print(graph.vertices_list)
 
-    for nodes in graph:
-        for weights in nodes.get_connections():
-            print("{}, {}".format(nodes.get_id(), weights.get_id()))
+    # for nodes in graph:
+    #     for weights in nodes.get_connections():
+    #         print("{}, {}".format(nodes.get_id(), weights.get_id()))
+
+    """Knight's tour"""
+    Search.knight_graph(5)
