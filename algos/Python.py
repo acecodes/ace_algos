@@ -922,6 +922,23 @@ class DataStructures(Algorithms):
 class Search(Algorithms):
 
     @staticmethod
+    def bfs(graph, start):
+        """Breadth first search (BFS) for graphs"""
+        start.set_distance(0)
+        start.set_pred(None)
+        node_queue = DataStructures.Queue()
+        node_queue.enqueue(start)
+        while (node_queue.size() > 0):
+            current_node = node_queue.deque()
+            for neighbor in current_node.get_connections():
+                if (neighbor.get_color() == 'white'):
+                    neighbor.set_color('gray')
+                    neighbor.set_distance(current_node.get_distance() + 1)
+                    neighbor.set_pred(current_node)
+                    node_queue.enqueue(neighbor)
+            current_node.set_color('black')
+
+    @staticmethod
     def preorder(tree):
         """Pre-order tree traversal"""
         if tree:
@@ -1265,6 +1282,29 @@ def measure_dynamic_array(n):
         b = sys.getsizeof(data)
         print("Length: {0:3d}; Size in bytes: {1:4d}".format(a, b))
         data.append(None)
+
+def build_ladder_graph(word_file):
+    dic = {}
+    graph = DataStructures.Graph()
+    w_file = open(word_file, 'r')
+    """Create buckets of words that are off by one letter"""
+    for line in w_file:
+        word = line[:-1]
+        for i in range(len(word)):
+            bucket = word[:i] + '_' + word[i+1:]
+            if bucket in dic:
+                dic[bucket].append(word)
+            else:
+                dic[bucket] = [word]
+
+    """Add nodes and edges for words in the same bucket"""
+    for bucket in dic.keys():
+        for word1 in dic[bucket]:
+            for word2 in dic[bucket]:
+                if word1 != word2:
+                graph.add_edge(word1, word2)
+
+    return graph 
 
 
 """Experimentation area - uncomment areas of interest"""
