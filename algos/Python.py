@@ -1,7 +1,7 @@
 # Compatability imports that allow usage in Python 2 & 3
 from __future__ import print_function
 from timeit import Timer
-
+import string
 import operator
 
 
@@ -1282,6 +1282,26 @@ class Generation(Algorithms):
 
 
 class Crypto(Algorithms):
+
+    class TuringCipher:
+        """Simple cipher based on Alan Turing's initial work in number theory"""
+
+        def __init__(self, key):
+            """Key must be prime"""
+            self.key = key
+            self.alphabet = {v: k for (k, v) in enumerate(string.ascii_letters)}
+
+        def encode(self, message):
+            """Encodes a message using the Turing cipher"""
+            encoded = []
+            for i in message:
+                if i in self.alphabet.keys():
+                    encoded.append(self.alphabet[i])
+            return int(''.join(["%d" % x for x in encoded])) * self.key
+
+        def decode(self, message):
+            """Gives you the original number"""
+            return message // self.key
 
     class CaesarCipher:
 
