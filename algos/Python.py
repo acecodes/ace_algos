@@ -921,6 +921,57 @@ class DataStructures(Algorithms):
 
 class Search(Algorithms):
 
+    class DFSGraph(DataStructures.Graph):
+        """Depth-first search of a graph"""
+
+        def __init__(self):
+            super().__init__()
+            self.time = 0
+
+        def dfs(self):
+            for node in self:
+                node.set_color('white')
+                node.set_pred(-1)
+            for node in self:
+                if node.get_color() == 'white':
+                    self.dfs_visit(node)
+
+        def dfs_visit(self, start_node):
+            start_node.set_color('gray')
+            self.time += 1
+            start_node.set_discovery(self.time)
+            for next_node in start_node.get_connections():
+                if next_node.get_color() == 'white':
+                    next_node.set_pred(start_node)
+                    self.dfs_visit(next_node)
+            start_node.set_color('black')
+            self.time += 1
+            start_node.set_finish(self.time)
+
+    @staticmethod
+    def knights_tour(tree_depth, visited_nodes, current_node, limit):
+        """Knight's tour algorithm - relies on Graph and Vertex"""
+        current_node.set_color('gray')
+        visited_nodes.append(current_node)
+        if tree_depth < limit:
+            number_list = list(current_node.get_connections())
+            i = 0
+            done = False
+            while i < len(number_list) and not done:
+                if number_list[i].get_color() == 'white':
+                    done = Search.knights_tour(
+                        tree_depth + 1, visited_nodes, number_list[i], limit
+                        )
+                i = i + 1
+            if not done:
+                """Get ready to backtrack"""
+                visited_nodes.pop()
+                current_node.set_color('white')
+        else:
+            done = True
+        return done
+
+
     @staticmethod
     def pos_to_node_id(row, column, board_size):
         """Convert position on chess board to node number"""
