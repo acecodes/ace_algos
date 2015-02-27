@@ -3,6 +3,8 @@ from __future__ import print_function
 from timeit import Timer
 import string
 import operator
+import collections
+import itertools
 
 
 class Exceptions:
@@ -45,6 +47,26 @@ class Recursion(Algorithms):
         else:
             return True
         return Recursion.isPal(s[0]) + Recursion.isPal(s[:1])
+
+    @staticmethod
+    def flatten(a_list):
+        """Recursively flatten a nested list"""
+        if a_list == []:
+            return a_list
+        if isinstance(a_list[0], list):
+            return Recursion.flatten(a_list[0]) + Recursion.flatten(a_list[1:])
+        return a_list[:1] + Recursion.flatten(a_list[1:])
+
+    @staticmethod
+    def gen_flatten(a_list):
+        """Use recursion and a generator to flatten a nested list"""
+        for element in a_list:
+            if isinstance(element, collections.Iterable) \
+              and not isinstance(element, str):
+                for sub in Recursion.gen_flatten(element):
+                    yield sub
+            else:
+                yield element
 
 
 class Hash(Algorithms):
@@ -971,7 +993,6 @@ class Search(Algorithms):
             done = True
         return done
 
-
     @staticmethod
     def pos_to_node_id(row, column, board_size):
         """Convert position on chess board to node number"""
@@ -1606,5 +1627,11 @@ if __name__ == '__main__':
     #     for weights in nodes.get_connections():
     #         print("{}, {}".format(nodes.get_id(), weights.get_id()))
 
-    """Knight's tour"""
-    Search.knight_graph(5)
+    # """Knight's tour"""
+    # Search.knight_graph(5)
+
+    """List flatten with recursion"""
+    test_list = [1, 2, [4, 5, [3, 2, 1]]]
+    gen_list = list(Recursion.gen_flatten(test_list))
+    print(Recursion.flatten(test_list))
+    print(Recursion.gen_flatten(test_list))
