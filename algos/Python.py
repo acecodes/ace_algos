@@ -4,7 +4,6 @@ from timeit import Timer
 import string
 import operator
 import collections
-import itertools
 
 
 class Exceptions:
@@ -1634,4 +1633,4 @@ if __name__ == '__main__':
     test_list = [1, 2, [4, 5, [3, 2, 1]]]
     gen_list = list(Recursion.gen_flatten(test_list))
     print(Recursion.flatten(test_list))
-    print(Recursion.gen_flatten(test_list))
+    print(gen_list)
