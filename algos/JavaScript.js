@@ -15,11 +15,49 @@ var factorial = function factorial(n) {
 };
 
 // Fibonacci series
-var Fibonaccio = function Fibonacci(n) {
+var fibonacci = function fibonacci(n) {
 	if (n <= 1) { return n; }
-	else { return Fibonacci(n-1) + Fibonacci(n-2); }
+	else { return fibonacci(n-1) + fibonacci(n-2); }
 
 };
+
+
+// Fibonacci with memoization
+var fibonacciMemo = (function() {
+    var memo = [0, 1];
+    var fib = function(n) {
+        var result = memo[n];
+        if (typeof result !== 'number') {
+            result = fib(n - 1) + fib(n - 2);
+            memo[n] = result;
+        }
+        return result;
+    };
+    return fib;
+})();
+
+// Memoizer for usage in other recursive algorithms
+var memoizer = function (memo, formula) {
+  var recur = function (n) {
+    var result = memo[n];
+    if (typeof result !== 'number') {
+      result = formula(recur, n);
+      memo[n] = result;
+    }
+    return result;
+  };
+  return recur;
+};
+
+
+// Fibonacci and factorial utilizing the memoizer function
+var fibonacciShortMemo = memoizer([0, 1], function (recur, n) {
+  return recur(n-1) + recur(n-2);
+});
+
+var factorialShortMemo = memoizer([1, 1], function (recur, n) {
+  return n * recur(n-1);
+});
 
 // Palindrome checker
 var palindrome = function palindrome(str) {
@@ -42,5 +80,3 @@ var Hanoi = function Hanoi(disk, src, aux, dst) {
   }
 
 };
-
-Hanoi(3, 'source', 'aux', 'destination');
