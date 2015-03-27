@@ -168,9 +168,24 @@ LinkedList.prototype = {
   }
 };
 
-var ll = new LinkedList();
-ll.add(5);
-ll.add(10);
-console.log(ll.item(0)); // 5
-ll.remove(0);
-console.log(ll.item(0)); // 10
+// var ll = new LinkedList();
+// ll.add(5);
+// ll.add(10);
+// console.log(ll.item(0)); // 5
+// ll.remove(0);
+// console.log(ll.item(0)); // 10
+
+// Array flattener
+function flattenArrays(a, r) {
+    if (!r) {
+        r = [];
+    }
+    for (var i = 0; i < a.length; i++) {
+        if (a[i].constructor == Array) {
+            flattenArrayOfArrays(a[i], r);
+        } else {
+            r.push(a[i]);
+        }
+    }
+    return r;
+}
