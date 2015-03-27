@@ -182,7 +182,7 @@ function flattenArrays(a, r) {
     }
     for (var i = 0; i < a.length; i++) {
         if (a[i].constructor == Array) {
-            flattenArrayOfArrays(a[i], r);
+            flattenArrays(a[i], r);
         } else {
             r.push(a[i]);
         }
