@@ -1,3 +1,5 @@
+'use strict';
+
 // Euclid's algorithm for finding GCFs
 var Euclid = function Euclid(p, q) {
     if (q === 0) {
@@ -44,7 +46,7 @@ var fibonacciMemo = (function() {
 })();
 
 // Memoizer for usage in other recursive algorithms
-var memoizer = function(memo, formula) {
+var memoizer = function memoizer(memo, formula) {
     var recur = function(n) {
         var result = memo[n];
         if (typeof result !== 'number') {
@@ -134,8 +136,9 @@ LinkedList.prototype = {
 
     // Check for item at index, return null if empty
     item: function(index) {
+        var len = this._length;
         //Check for out-of-bounds values
-        if (index > -1 && index < this._length) {
+        if (index > -1 && index < len) {
             var current = this._head,
                 i = 0;
 
@@ -149,7 +152,8 @@ LinkedList.prototype = {
     },
 
     remove: function(index) {
-        if (index > -1 && index < this._length) {
+        var len = this._length;
+        if (index > -1 && index < len) {
             var current = this._head,
                 previous,
                 i = 0;
@@ -165,7 +169,7 @@ LinkedList.prototype = {
                 previous.next = current.next;
             }
 
-            this._length--;
+            len--;
 
             return current.data;
         } else {
@@ -176,11 +180,12 @@ LinkedList.prototype = {
 
 // Array flattener
 function flattenArrays(a, r) {
+    var len = a.length;
     if (!r) {
         r = [];
     }
-    for (var i = 0; i < a.length; i++) {
-        if (a[i].constructor == Array) {
+    for (var i = 0; i < len; i++) {
+        if (a[i].constructor === Array) {
             flattenArrays(a[i], r);
         } else {
             r.push(a[i]);
@@ -191,12 +196,12 @@ function flattenArrays(a, r) {
 
 // Find maximum triplet, from Codility
 function solution(A) { // A is an array
-
+    var len = A.length;
     Array.prototype.max = function() {
         return Math.max.apply(null, this);
     };
 
-    if (A.length < 3) {
+    if (len < 3) {
         throw "The array is too small";
     }
 
@@ -206,8 +211,8 @@ function solution(A) { // A is an array
 
     A = A.sort(sorter);
 
-    var result = [A[0] * A[1] * A[A.length - 1],
-        A[A.length - 1] * A[A.length - 2] * A[A.length - 3]
+    var result = [A[0] * A[1] * A[len - 1],
+        A[len - 1] * A[len - 2] * A[len - 3]
     ].max();
 
     return result;
