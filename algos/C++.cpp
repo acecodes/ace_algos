@@ -1,4 +1,6 @@
 #include <iostream>
+#include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -40,15 +42,32 @@ int Factorial(int n) {
 	}
 }
 
-int main() {
-	int input1;
-	int input2;
-	cout << "Enter a number: ";
-	cin >> input1;
-	cout << "Now enter another: ";
-	cin >> input2;
-	cout << "Euclid's algorith: " << Euclid(input1, input2) << endl;
-	cout << "Fibonacci sequence: " << Fibonacci(input1) << endl;
-	cout << "Factorial: " << Factorial(input1) << endl;
+bool test_function (int i, int j) { return (i < j); }
+
+int BinarySearch() {
+
+	int search_array[] = {1, 5, 2, 9, 3, 6, 4};
+	std::vector<int> v(search_array, search_array+9);
+
+	std::sort (v.begin(), v.end());
+
+	std::cout << "Looking for a 5...";
+	if (std::binary_search (v.begin(), v.end(), 5))
+		std::cout << "Found.\n"; else std::cout << "Not found.\n";
+
 	return 0;
+}
+
+int main() {
+	BinarySearch();
+	// int input1;
+	// int input2;
+	// cout << "Enter a number: ";
+	// cin >> input1;
+	// cout << "Now enter another: ";
+	// cin >> input2;
+	// cout << "Euclid's algorith: " << Euclid(input1, input2) << endl;
+	// cout << "Fibonacci sequence: " << Fibonacci(input1) << endl;
+	// cout << "Factorial: " << Factorial(input1) << endl;
+	// return 0;
 }
