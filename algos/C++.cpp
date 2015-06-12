@@ -44,22 +44,30 @@ int Factorial(int n) {
 
 bool test_function (int i, int j) { return (i < j); }
 
-int BinarySearch() {
+int BinarySearch(int search_array[], int seek) {
 
-	int search_array[] = {1, 5, 2, 9, 3, 6, 4};
-	std::vector<int> v(search_array, search_array+9);
+	vector<int> v(search_array, search_array+9);
 
-	std::sort (v.begin(), v.end());
+	sort (v.begin(), v.end());
 
-	std::cout << "Looking for a 5...";
-	if (std::binary_search (v.begin(), v.end(), 5))
-		std::cout << "Found.\n"; else std::cout << "Not found.\n";
+	cout << "Looking for a " << seek << "...";
+	
+	if (binary_search (v.begin(), v.end(), seek)) {
+		cout << "Found.\n";
+	}
+	
+	else { 
+		cout << "Not found.\n";
+	}
 
 	return 0;
 }
 
 int main() {
-	BinarySearch();
+	int test_array[] = {1, 5, 2, 9, 3, 6, 4};
+	
+	BinarySearch(test_array, 6);
+	BinarySearch(test_array, 12);
 	// int input1;
 	// int input2;
 	// cout << "Enter a number: ";
