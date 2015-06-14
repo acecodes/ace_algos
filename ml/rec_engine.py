@@ -84,8 +84,38 @@ def top_matches(prefs, person, n=5, similarity=sim_pearson):
     return scores[0:n]
 
 
-# Sample data: Movie critics and their scores for movies
+def get_recommendations(prefs, person, similarity=sim_pearson):
+    """Generate recommendations for a person"""
+    totals = {}
+    similarity_sums = {}
 
+    for other in prefs:
+        if other == person:
+            continue
+
+        sim = similarity(prefs, person, other)
+
+        if sim <= 0:
+            continue
+
+        for item in prefs[other]:
+            if item not in prefs[person] or prefs[person][item] == 0:
+                totals.setdefault(item, 0)
+                totals[item] += prefs[other][item] * sim
+                similarity_sums.setdefault(item, 0)
+                similarity_sums[item] += sim
+
+    # Normalized list
+    rankings = [(total / similarity_sums[item], item)
+                for item, total in totals.items()]
+
+    # Returns normalized score, not an r that would be between -1 and 1
+    rankings.sort()
+    rankings.reverse()
+    return rankings
+
+
+"""Sample data: Movie critics and their scores for movies"""
 critics = {'Lisa Rose': {'Lady in the Water': 2.5,
                          'Snakes on a Plane': 3.5,
                          'Just My Luck': 3.0,
@@ -127,4 +157,6 @@ if __name__ == '__main__':
     print('\nPerson correlation:')
     print(sim_pearson(critics, 'Claudia Puig', 'Mick LaSalle'))
     print('\nTop matches:')
-    print(top_matches(critics, 'Claudia Puig'))
+    print(top_matches(critics, 'Jack Matthews'))
+    print('\nRecommendations:')
+    print(get_recommendations(critics, 'Michael Phillips'))
