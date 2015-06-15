@@ -74,6 +74,17 @@ def sim_pearson(prefs, person1, person2):
         return str(e) + ' is not a person within your dataset.'
 
 
+def transform_prefs(prefs):
+    """Transform data so that similar items can be recommended"""
+    result = {}
+    for person in prefs:
+        for item in prefs[person]:
+            result.setdefault(item, {})
+
+            result[item][person] = prefs[person][item]
+    return result
+
+
 def top_matches(prefs, person, n=5, similarity=sim_pearson):
     """See which critics are the most similar to each other"""
     scores = [(similarity(prefs, person, other), other)
@@ -160,3 +171,7 @@ if __name__ == '__main__':
     print(top_matches(critics, 'Jack Matthews'))
     print('\nRecommendations:')
     print(get_recommendations(critics, 'Michael Phillips'))
+    movies = transform_prefs(critics)
+    print('\nTop matches with transform:')
+    print(top_matches(movies, 'Just My Luck'))
+    print(get_recommendations(movies, 'Just My Luck'))
