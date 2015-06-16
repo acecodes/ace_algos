@@ -126,6 +126,24 @@ def get_recommendations(prefs, person, similarity=sim_pearson):
     return rankings
 
 
+def calculate_similar_items(prefs, n=10):
+    # Create a dictionary of items showing which other items they
+    # are most similar to.
+    result = {}
+
+    # Invert the preference matrix to be item-centric
+    item_prefs = transform_prefs(prefs)
+    c = 0
+    for item in item_prefs:
+        # Status updates for large datasets
+        c += 1
+        if c % 100 == 0:
+            print "%d / %d" % (c, len(item_prefs))
+        # Find the most similar items to this one
+        scores = top_matches(item_prefs, item, n=n, similarity=sim_distance)
+        result[item] = scores
+    return result
+
 """Sample data: Movie critics and their scores for movies"""
 critics = {'Lisa Rose': {'Lady in the Water': 2.5,
                          'Snakes on a Plane': 3.5,
@@ -163,7 +181,7 @@ critics = {'Lisa Rose': {'Lady in the Water': 2.5,
 
 
 if __name__ == '__main__':
-    print('Collaborative filtering: ')
+    print('User-based collaborative filtering: ')
     print(sim_distance(critics, 'Claudia Puig', 'Mick LaSalle'))
     print('\nPerson correlation:')
     print(sim_pearson(critics, 'Claudia Puig', 'Mick LaSalle'))
@@ -175,3 +193,5 @@ if __name__ == '__main__':
     print('\nTop matches with transform:')
     print(top_matches(movies, 'Just My Luck'))
     print(get_recommendations(movies, 'Just My Luck'))
+    print('Item-based collaborative filtering:')
+    print(calculate_similar_items(critics))
