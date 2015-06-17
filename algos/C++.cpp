@@ -67,11 +67,28 @@ int BinarySearch(int search_array[], int seek) {
 	return 0;
 }
 
+int LinearSearch (vi search_array, int seek) {
+	// Slow and inefficient, but it works
+	int i;
+	int length = search_array.size();
+
+	for (i = 0; i < length; i++) {
+		if (search_array[i] == seek) {
+			return i;
+		}
+
+	}
+	return -1;
+};
+
 int main() {
-	int test_array[] = {1, 5, 2, 9, 3, 6, 4};
 	
+	int test_array[] = {1, 5, 2, 9, 3, 6, 4};
+	vi test_vector{1, 5, 6, 7, 9, 12, 19};
+
 	BinarySearch(test_array, 6);
 	BinarySearch(test_array, 12);
+	cout << LinearSearch(test_vector, 5);
 	// int input1;
 	// int input2;
 	// cout << "Enter a number: ";
