@@ -4,6 +4,10 @@
 
 using namespace std;
 
+// Typedefs to save space
+typedef vector<int> vi;
+
+
 // Euclid's algorithm
 
 int Euclid(int p, int q) {
@@ -46,7 +50,7 @@ bool test_function (int i, int j) { return (i < j); }
 
 int BinarySearch(int search_array[], int seek) {
 
-	vector<int> v(search_array, search_array+9);
+	vi v(search_array, search_array+9);
 
 	sort (v.begin(), v.end());
 
