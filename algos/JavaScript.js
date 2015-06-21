@@ -178,6 +178,17 @@ LinkedList.prototype = {
     }
 };
 
+// Linear search
+function linearSearch(array, target) {
+    var len = array.length;
+    for (var i=0; i < len; i++ ) {
+        if (array[i] === target) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 // Array flattener
 function flattenArrays(a, r) {
     var len = a.length;
