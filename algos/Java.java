@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Java {
   private static int linear_search(int[] array, int target) {
     // Linear search - slow, but you will eventually get the right answer
@@ -11,7 +13,14 @@ public class Java {
     return -1;
   }
 
-  private static int binary_search(int[] array, int target) {
+  private static int binary_search(int[] array, int target, boolean unsorted) {
+
+    if (unsorted == true) {
+      // If we are fed an unsorted array, sort it
+      System.out.println("Sorting unsorted array...");
+      Arrays.sort(array);
+    }
+
     // Binary search - fastest possible search, needs a sorted collection
     int first = 0;
     int last = array.length - 1;
@@ -51,6 +60,7 @@ public class Java {
 
     System.out.println(linear_search(test_array, 9));
     System.out.println(factorial(5));
-    System.out.println(binary_search(sorted_array, 3));
+    System.out.println(binary_search(test_array, 9, true));
+    System.out.println(binary_search(sorted_array, 3, false));
   }
 }
