@@ -49,7 +49,10 @@ end
 puts("Linear search: ", LinearSearch(unsorted_array, 8))
 
 # Binary search
-def BinarySearch(array, target)
+def BinarySearch(array, target, sorted=true)
+  if sorted == false
+    array.sort()
+  end
   low = 0
   high = array.length - 1
   middle = Integer((low + high)/2)
@@ -70,3 +73,4 @@ return -1
 end
 
 puts("Binary search: ", BinarySearch(sorted_array, 22))
+puts("Binary search (starting with unsorted array): ", BinarySearch(unsorted_array, 8, sorted=false))
