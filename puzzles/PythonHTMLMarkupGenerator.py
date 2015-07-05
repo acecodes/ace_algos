@@ -2,8 +2,9 @@
 
 import webbrowser
 
+
 def gen_html_file(entry, title="Default Title", open_output=False):
-	output = """<!DOCTYPE html>
+    output = """<!DOCTYPE html>
 	<html>
 	    <head>
 	        <title>{title}</title>
@@ -15,11 +16,11 @@ def gen_html_file(entry, title="Default Title", open_output=False):
 	</html>
 	""".format(entry=entry, title=title)
 
-	with open("result.html", 'w') as html_generator:
-		html_generator.write(output)
+    with open("result.html", 'w') as html_generator:
+        html_generator.write(output)
 
-	if open_output == True:
-		webbrowser.open("result.html")
+    if open_output == True:
+        webbrowser.open("result.html")
 
 if __name__ == '__main__':
-	gen_html_file('This is a test', title='Test page', open_output=True)
+    gen_html_file('This is a test', title='Test page', open_output=True)
