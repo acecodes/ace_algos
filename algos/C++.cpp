@@ -54,23 +54,30 @@ public:
 
 class Search {
 public:
-	int BinarySearch(int search_array[], int seek) {
+	int BinarySearch(vi search_vector, int seek) {
 
-		vi v(search_array, search_array+9);
+		int first = 0;
+		int last = search_vector.size() - 1;
+		int middle = (first + last) / 2;
+		int pos = -1;
 
-		sort (v.begin(), v.end());
+		while (first <= last) {
+			if (search_vector[middle] < seek) {
+				first = middle + 1;
+			}
+			else if (search_vector[middle] == seek) {
+				pos = middle;
+				return pos;
+			}
+			else {
+				last = middle - 1;
+			}
 
-		cout << "Looking for a " << seek << "...";
-		
-		if (binary_search (v.begin(), v.end(), seek)) {
-			cout << "Found.\n";
+			middle = (first + last) / 2;
 		}
-		
-		else { 
-			cout << "Not found.\n";
-		}
 
-		return 0;
+		return pos;
+
 	}
 
 	int LinearSearch (vi search_array, int seek) {
@@ -91,8 +98,10 @@ public:
 int main() {
 	Search search;
 
-	search.BinarySearch(test_array, 6);
-	search.BinarySearch(test_array, 12);
+	cout << "Binary searches:" << endl;
+	cout << search.BinarySearch(test_vector, 6) << endl;
+	cout << search.BinarySearch(test_vector, 12) << endl;
+	cout << search.BinarySearch(test_vector, 201) << endl;
 	
 	cout << "Linear search: " << search.LinearSearch(test_vector, 5) << endl;
 	
