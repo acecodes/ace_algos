@@ -2,17 +2,15 @@
 #include <algorithm>
 #include <vector>
 
-using namespace std;
-
 // Typedefs to save space
-typedef vector<int> vi;
+typedef std::vector<int> vi;
 
 // Test for greater-than or less-than
 bool test_function (int i, int j) { return (i < j); }
 
 // Data to work with
 int test_array[] = {1, 5, 2, 9, 3, 6, 4};
-vi test_vector {1, 5, 6, 7, 9, 12, 19};
+vi test_vector{1, 5, 6, 7, 9, 12, 19};
 
 class Recursion {
 public:
@@ -98,15 +96,15 @@ public:
 int main() {
 	Search search;
 
-	cout << "Binary searches:" << endl;
-	cout << search.BinarySearch(test_vector, 6) << endl;
-	cout << search.BinarySearch(test_vector, 12) << endl;
-	cout << search.BinarySearch(test_vector, 201) << endl;
+	std::cout << "Binary searches:" << std::endl;
+	std::cout << search.BinarySearch(test_vector, 6) << std::endl;
+	std::cout << search.BinarySearch(test_vector, 12) << std::endl;
+	std::cout << search.BinarySearch(test_vector, 201) << std::endl;
 	
-	cout << "Linear search: " << search.LinearSearch(test_vector, 5) << endl;
+	std::cout << "Linear search: " << search.LinearSearch(test_vector, 5) << std::endl;
 	
 	Recursion recur;
-	cout << "Recursive Fibonacci: " << recur.Fibonacci(5) << endl;
+	std::cout << "Recursive Fibonacci: " << recur.Fibonacci(5) << std::endl;
 	
 	return 0;
 }
