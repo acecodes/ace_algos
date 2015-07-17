@@ -144,6 +144,33 @@ def calculate_similar_items(prefs, n=10):
         result[item] = scores
     return result
 
+
+def get_recommended_items(prefs, item_match, user):
+    user_ratings = prefs[user]
+    scores = {}
+    total_sim = {}
+
+    #  Go over items rated by user
+    for (item, rating) in user_ratings.items():
+        #  Go over items similar to this one
+        for (similarity, item2) in item_match[item]:
+            # #  Ignore if user has already rated item
+            # if item2 in user_ratings:
+            #     continue
+
+            scores.setdefault(item2, 0)
+            scores[item2] += similarity * rating
+
+            total_sim.setdefault(item2, 0)
+            total_sim[item2] += similarity
+
+    rankings = [(score/total_sim[item], item) for item, score in scores.items()]
+
+    rankings.sort()
+    rankings.reverse()
+    return rankings
+
+
 """Sample data: Movie critics and their scores for movies"""
 critics = {'Lisa Rose': {'Lady in the Water': 2.5,
                          'Snakes on a Plane': 3.5,
@@ -194,4 +221,7 @@ if __name__ == '__main__':
     print(top_matches(movies, 'Just My Luck'))
     print(get_recommendations(movies, 'Just My Luck'))
     print('Item-based collaborative filtering:')
-    print(calculate_similar_items(critics))
+    itemsim = calculate_similar_items(critics)
+    print(itemsim)
+    print('Item-based recommendations:')
+    print(get_recommended_items(critics, itemsim, 'Mick LaSalle'))
