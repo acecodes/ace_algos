@@ -1,6 +1,5 @@
 var Main = (function() {
-    'use strict';
-
+    "use strict";
     // Euclid's algorithm for finding GCFs
     var Euclid = function Euclid(p, q) {
         if (q === 0) {
@@ -9,9 +8,7 @@ var Main = (function() {
             var r = p % q;
             return Euclid(q, r);
         }
-
     };
-
     // Factorial
     var factorial = function factorial(n) {
         if (n === 1 || n === 0) {
@@ -20,7 +17,6 @@ var Main = (function() {
             return n * factorial(n - 1);
         }
     };
-
     // Fibonacci series
     var fibonacci = function fibonacci(n) {
         if (n <= 1) {
@@ -28,29 +24,25 @@ var Main = (function() {
         } else {
             return fibonacci(n - 1) + fibonacci(n - 2);
         }
-
     };
-
-
     // Fibonacci with memoization
-    var fibonacciMemo = (function() {
-        var memo = [0, 1];
+    var fibonacciMemo = function() {
+        var memo = [ 0, 1 ];
         var fib = function(n) {
             var result = memo[n];
-            if (typeof result !== 'number') {
+            if (typeof result !== "number") {
                 result = fib(n - 1) + fib(n - 2);
                 memo[n] = result;
             }
             return result;
         };
         return fib;
-    })();
-
+    }();
     // Memoizer for usage in other recursive algorithms
     var memoizer = function memoizer(memo, formula) {
         var recur = function(n) {
             var result = memo[n];
-            if (typeof result !== 'number') {
+            if (typeof result !== "number") {
                 result = formula(recur, n);
                 memo[n] = result;
             }
@@ -58,17 +50,13 @@ var Main = (function() {
         };
         return recur;
     };
-
-
     // Fibonacci and factorial utilizing the memoizer function
-    var fibonacciShortMemo = memoizer([0, 1], function(recur, n) {
+    var fibonacciShortMemo = memoizer([ 0, 1 ], function(recur, n) {
         return recur(n - 1) + recur(n - 2);
     });
-
-    var factorialShortMemo = memoizer([1, 1], function(recur, n) {
+    var factorialShortMemo = memoizer([ 1, 1 ], function(recur, n) {
         return n * recur(n - 1);
     });
-
     // Palindrome checker
     var palindrome = function palindrome(str) {
         newstr = str.toLowerCase();
@@ -79,70 +67,54 @@ var Main = (function() {
         }
         return palindrome(newstr[0]) + palindrome(newstr[newstr.slice(-1)]);
     };
-
     // Tower of Hanoi solver
     var Hanoi = function Hanoi(disk, src, aux, dst) {
         if (disk > 0) {
             Hanoi(disk - 1, src, dst, aux);
-            console.log('Move disk ' + disk + ' from ' + src + ' to ' + dst);
+            console.log("Move disk " + disk + " from " + src + " to " + dst);
             Hanoi(disk - 1, aux, src, dst);
         }
-
     };
-
     // Linked list
     var firstNode = {
         data: 0,
         next: null
     };
-
     // Attach first node, creating the list
     firstNode.next = {
         data: 1,
         next: null
     };
-
     // Linked list constructor
     function LinkedList() {
         this._length = 0;
         this._head = null;
     }
-
     // Linked list methods
     LinkedList.prototype = {
-
         // Create new node with data
         add: function(data) {
             var node = {
-                    data: data,
-                    next: null
-                },
-
-                current;
-
+                data: data,
+                next: null
+            }, current;
             if (this._head === null) {
                 this._head = node;
             } else {
                 current = this._head;
-
                 while (current.next) {
                     current = current.next;
                 }
-
                 current.next = node;
             }
-
             this._length++;
         },
-
         // Check for item at index, return null if empty
         item: function(index) {
             var len = this._length;
             //Check for out-of-bounds values
             if (index > -1 && index < len) {
-                var current = this._head,
-                    i = 0;
-
+                var current = this._head, i = 0;
                 while (i++ < index) {
                     current = current.next;
                 }
@@ -151,14 +123,10 @@ var Main = (function() {
                 return null;
             }
         },
-
         remove: function(index) {
             var len = this._length;
             if (index > -1 && index < len) {
-                var current = this._head,
-                    previous,
-                    i = 0;
-
+                var current = this._head, previous, i = 0;
                 if (index === 0) {
                     this._head = current.next;
                 } else {
@@ -166,19 +134,15 @@ var Main = (function() {
                         previous = current;
                         current = current.next;
                     }
-
                     previous.next = current.next;
                 }
-
                 len--;
-
                 return current.data;
             } else {
                 return null;
             }
         }
     };
-
     // Linear search
     function linearSearch(array, target) {
         var len = array.length;
@@ -189,7 +153,6 @@ var Main = (function() {
         }
         return -1;
     }
-
     // Array flattener
     function flattenArrays(a, r) {
         var len = a.length;
@@ -205,28 +168,29 @@ var Main = (function() {
         }
         return r;
     }
-
     // Find maximum triplet, from Codility
-    function solution(A) { // A is an array
+    function solution(A) {
+        // A is an array
         var len = A.length;
         Array.prototype.max = function() {
             return Math.max.apply(null, this);
         };
-
         if (len < 3) {
             throw "The array is too small";
         }
-
         function sorter(a, b) {
             return a - b;
         }
-
         A = A.sort(sorter);
-
-        var result = [A[0] * A[1] * A[len - 1],
-            A[len - 1] * A[len - 2] * A[len - 3]
-        ].max();
-
+        var result = [ A[0] * A[1] * A[len - 1], A[len - 1] * A[len - 2] * A[len - 3] ].max();
         return result;
+    }
+    function mergeSort(array, start, end) {
+        if (start < end) {
+            var mid = Math.floor((start + end) / 2);
+            mergeSort(array, start, mid);
+            mergeSort(array, mid + 1, end);
+            merge(array, start, mid, end); // Implement merge
+        }
     }
 })();
