@@ -1430,6 +1430,7 @@ class Build(Algorithms):
         return graph
 
 
+@timefn
 def measure_dynamic_array(n):
     """Measure the number of bytes a dynamic array up to size n-1
     takes up in memory"""
@@ -1440,7 +1441,6 @@ def measure_dynamic_array(n):
         b = sys.getsizeof(data)
         print("Length: {0:3d}; Size in bytes: {1:4d}".format(a, b))
         data.append(None)
-
 
 
 

@@ -185,12 +185,34 @@ var Main = (function() {
         var result = [ A[0] * A[1] * A[len - 1], A[len - 1] * A[len - 2] * A[len - 3] ].max();
         return result;
     }
-    function mergeSort(array, start, end) {
-        if (start < end) {
-            var mid = Math.floor((start + end) / 2);
-            mergeSort(array, start, mid);
-            mergeSort(array, mid + 1, end);
-            merge(array, start, mid, end); // Implement merge
+    // Merge, which performs most of the work in merge sort
+    function merge(left, right) {
+        var result = [],
+            indexLeft = 0,
+            indexRight = 0,
+            leftLength = left.length,
+            rightLength = right.length;
+
+        while (indexLeft < leftLength && indexRight < rightLength) {
+            if (left[indexLeft] < right[indexRight]) {
+                result.push(left[indexLeft++]);
+            } else {
+                result.push(right[indexRight++]);
+            }
         }
+        return result.concat(left.slice(indexLeft).concat(right.slice(indexRight)));
+    }
+    // Merge sort, recursive sorting algorithm with guaranteed n log n performance
+    function mergeSort(array) {
+        var len = array.length;
+        if (len < 2) {
+            return array;
+        }
+
+        var middle = Math.floor(len / 2),
+            left = array.slice(0, middle),
+            right = array.slice(middle);
+
+        return merge(mergeSort(left), mergeSort(right));
     }
 })();
