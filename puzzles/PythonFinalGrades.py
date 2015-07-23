@@ -36,7 +36,8 @@ class Student:
                 return letters
 
     def __call__(self):
-        print("{first} {last}: ".format(first=self.first_name, last=self.last_name)),
+        print("{first} {last}: ".format(
+            first=self.first_name, last=self.last_name)),
         for items in self.rank():
             print(str(items) + " "),
 
@@ -55,7 +56,7 @@ class Database:
 
         cursor.executescript("""
 
-			CREATE TABLE {title} (FirstName char(50), 
+            CREATE TABLE {title} (FirstName char(50), 
                       LastName char(50), 
                       Average INT(3),
                       Grade char(2), 
@@ -65,7 +66,7 @@ class Database:
                       Score4 INT(3), 
                       Score5 INT(3));
 
-			""".format(title=self.title))
+            """.format(title=self.title))
 
         conn.commit()
         cursor.close()
@@ -77,7 +78,7 @@ class Database:
         result = cursor.fetchall()
 
         cursor.execute("""INSERT INTO Grades (FirstName, LastName, Average, Grade, Score1, Score2, Score3, Score4, Score5)
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""", (student_obj.first_name, student_obj.last_name, student_obj.average(), student_obj.grade(), student_obj.score1,
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""", (student_obj.first_name, student_obj.last_name, student_obj.average(), student_obj.grade(), student_obj.score1,
                                            student_obj.score2, student_obj.score3, student_obj.score4, student_obj.score5))
 
         conn.commit()
@@ -89,7 +90,8 @@ class Database:
         cursor = conn.cursor()
         result = cursor.fetchall()
 
-        grades = cursor.execute('''SELECT * FROM Grades ORDER BY Average DESC;''')
+        grades = cursor.execute(
+            '''SELECT * FROM Grades ORDER BY Average DESC;''')
 
         for results in grades:
             for students in results:
