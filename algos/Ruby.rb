@@ -68,8 +68,36 @@ class Search
   end
 end
 
+class Sorting
+    def Merge(left, right)
+        # Merge function of merge sort
+        result = []
+
+        while left.size > 0 && right.size > 0
+            result << if left[0] <= right[0]
+                left.shift
+            else
+                right.shift
+            end
+        end
+
+        return result.concat(left).concat(right)
+    end
+
+    def MergeSort(arr)
+        # Actual merge sort
+        return arr if arr.size <= 1
+        left = MergeSort(arr[0, arr.size / 2])
+        right = MergeSort(arr[arr.size / 2, arr.size])
+
+        self.Merge(left, right)
+    end 
+end
+
+
 recur = Recursion.new()
 search = Search.new()
+sorting = Sorting.new()
 
 puts("Euclid's algorithm (10, 25): ", recur.Euclid(10, 25))
 puts("Factorial (5): ", recur.Factorial(5))
@@ -78,3 +106,4 @@ puts("Fibonacci (6): ", recur.Fibonacci(6))
 puts("Linear search: ", search.LinearSearch(unsorted_array, 8))
 puts("Binary search: ", search.BinarySearch(sorted_array, 22))
 puts("Binary search (starting with unsorted array): ", search.BinarySearch(unsorted_array, 8, sorted=false))
+puts("Merge sort: ", sorting.MergeSort(unsorted_array))
