@@ -1430,7 +1430,6 @@ class Build(Algorithms):
         return graph
 
 
-@timefn
 def measure_dynamic_array(n):
     """Measure the number of bytes a dynamic array up to size n-1
     takes up in memory"""
