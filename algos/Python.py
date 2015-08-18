@@ -1672,8 +1672,8 @@ if __name__ == '__main__':
     # print(Recursion.flatten(test_list))
     # print(gen_list)
 
-    """Bloom filters"""
-    bloom = DataStructures.BloomFilter(200)
-    for i in range(50):
-        bloom.add(str(i))
-    print("20" in bloom)
+    # """Bloom filters"""
+    # bloom = DataStructures.BloomFilter(200)
+    # for i in range(50):
+    #     bloom.add(str(i))
+    # print("20" in bloom)
