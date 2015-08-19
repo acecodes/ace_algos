@@ -10,7 +10,7 @@ import mmh3
 
 class Exceptions:
 
-    class Empty(Exception):
+    class Empsuty(Exception):
         pass
 
 
@@ -68,6 +68,20 @@ class Recursion(Algorithms):
                     yield sub
             else:
                 yield element
+
+    @staticmethod
+    def powers(n, power):
+        """Recursively calculate the power of a number"""
+        if power == 1:
+            return n
+        return n * Recursion.powers(n, power-1)
+
+    @staticmethod
+    def summer(n):
+        """Recursively sum up to n"""
+        if n > 0:
+            return n + Recursion.summer(n - 1)
+        return 0
 
 
 class Hash(Algorithms):

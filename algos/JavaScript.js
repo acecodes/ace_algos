@@ -1,33 +1,49 @@
 var Main = (function() {
     "use strict";
     // Euclid's algorithm for finding GCFs
-    var Euclid = function Euclid(p, q) {
+    function euclid(p, q) {
         if (q === 0) {
             return p;
         } else {
             var r = p % q;
-            return Euclid(q, r);
+            return euclid(q, r);
         }
-    };
+    }
+    // Recursively sum up to n
+    function summer(n) {
+        if (n > 0) {
+            return n + summer(n - 1);
+        } else {
+            return 0;
+        }
+    }
+    // Recursively calculate power of n
+    function powers(n, power) {
+        if (power == 1) {
+            return n;
+        } else {
+            return n * powers(n, power - 1);
+        }
+    }
     // Factorial
-    var factorial = function factorial(n) {
+    function factorial(n) {
         if (n === 1 || n === 0) {
             return 1;
         } else {
             return n * factorial(n - 1);
         }
-    };
+    }
     // Fibonacci series
-    var fibonacci = function fibonacci(n) {
+    function fibonacci(n) {
         if (n <= 1) {
             return n;
         } else {
             return fibonacci(n - 1) + fibonacci(n - 2);
         }
-    };
+    }
     // Fibonacci with memoization
-    var fibonacciMemo = function() {
-        var memo = [ 0, 1 ];
+    function fibonacciMemo() {
+        var memo = [0, 1];
         var fib = function(n) {
             var result = memo[n];
             if (typeof result !== "number") {
@@ -37,9 +53,9 @@ var Main = (function() {
             return result;
         };
         return fib;
-    }();
+    }
     // Memoizer for usage in other recursive algorithms
-    var memoizer = function memoizer(memo, formula) {
+    function memoizer(memo, formula) {
         var recur = function(n) {
             var result = memo[n];
             if (typeof result !== "number") {
@@ -49,16 +65,16 @@ var Main = (function() {
             return result;
         };
         return recur;
-    };
+    }
     // Fibonacci and factorial utilizing the memoizer function
-    var fibonacciShortMemo = memoizer([ 0, 1 ], function(recur, n) {
+    var fibonacciShortMemo = memoizer([0, 1], function(recur, n) {
         return recur(n - 1) + recur(n - 2);
     });
-    var factorialShortMemo = memoizer([ 1, 1 ], function(recur, n) {
+    var factorialShortMemo = memoizer([1, 1], function(recur, n) {
         return n * recur(n - 1);
     });
     // Palindrome checker
-    var palindrome = function palindrome(str) {
+    function palindrome(str) {
         newstr = str.toLowerCase();
         if (newstr[0] !== newstr.slice(-1)) {
             return false;
@@ -66,15 +82,15 @@ var Main = (function() {
             return true;
         }
         return palindrome(newstr[0]) + palindrome(newstr[newstr.slice(-1)]);
-    };
+    }
     // Tower of Hanoi solver
-    var Hanoi = function Hanoi(disk, src, aux, dst) {
+    function hanoi(disk, src, aux, dst) {
         if (disk > 0) {
-            Hanoi(disk - 1, src, dst, aux);
+            hanoi(disk - 1, src, dst, aux);
             console.log("Move disk " + disk + " from " + src + " to " + dst);
-            Hanoi(disk - 1, aux, src, dst);
+            hanoi(disk - 1, aux, src, dst);
         }
-    };
+    }
     // Linked list
     var firstNode = {
         data: 0,
@@ -95,9 +111,10 @@ var Main = (function() {
         // Create new node with data
         add: function(data) {
             var node = {
-                data: data,
-                next: null
-            }, current;
+                    data: data,
+                    next: null
+                },
+                current;
             if (this._head === null) {
                 this._head = node;
             } else {
@@ -114,7 +131,8 @@ var Main = (function() {
             var len = this._length;
             //Check for out-of-bounds values
             if (index > -1 && index < len) {
-                var current = this._head, i = 0;
+                var current = this._head,
+                    i = 0;
                 while (i++ < index) {
                     current = current.next;
                 }
@@ -126,7 +144,8 @@ var Main = (function() {
         remove: function(index) {
             var len = this._length;
             if (index > -1 && index < len) {
-                var current = this._head, previous, i = 0;
+                var current = this._head,
+                    previous, i = 0;
                 if (index === 0) {
                     this._head = current.next;
                 } else {
@@ -178,41 +197,52 @@ var Main = (function() {
         if (len < 3) {
             throw "The array is too small";
         }
+
         function sorter(a, b) {
             return a - b;
         }
         A = A.sort(sorter);
-        var result = [ A[0] * A[1] * A[len - 1], A[len - 1] * A[len - 2] * A[len - 3] ].max();
+        var result = [A[0] * A[1] * A[len - 1], A[len - 1] * A[len - 2] * A[len - 3]].max();
         return result;
     }
-    // Merge, which performs most of the work in merge sort
-    function merge(left, right) {
-        var result = [],
-            indexLeft = 0,
-            indexRight = 0,
-            leftLength = left.length,
-            rightLength = right.length;
 
-        while (indexLeft < leftLength && indexRight < rightLength) {
-            if (left[indexLeft] < right[indexRight]) {
-                result.push(left[indexLeft++]);
-            } else {
-                result.push(right[indexRight++]);
+    function mergeSort(array, start, end) {
+        if (start < end) {
+            var mid = Math.floor((start + end) / 2);
+            mergeSort(array, start, mid);
+            mergeSort(array, mid + 1, end);
+            merge(array, start, mid, end); // Implement merge
+        }
+
+        // Merge, which performs most of the work in merge sort
+        function merge(left, right) {
+            var result = [],
+                indexLeft = 0,
+                indexRight = 0,
+                leftLength = left.length,
+                rightLength = right.length;
+
+            while (indexLeft < leftLength && indexRight < rightLength) {
+                if (left[indexLeft] < right[indexRight]) {
+                    result.push(left[indexLeft++]);
+                } else {
+                    result.push(right[indexRight++]);
+                }
             }
+            return result.concat(left.slice(indexLeft).concat(right.slice(indexRight)));
         }
-        return result.concat(left.slice(indexLeft).concat(right.slice(indexRight)));
-    }
-    // Merge sort, recursive sorting algorithm with guaranteed n log n performance
-    function mergeSort(array) {
-        var len = array.length;
-        if (len < 2) {
-            return array;
+        // Merge sort, recursive sorting algorithm with guaranteed n log n performance
+        function mergeSort(array) {
+            var len = array.length;
+            if (len < 2) {
+                return array;
+            }
+
+            var middle = Math.floor(len / 2),
+                left = array.slice(0, middle),
+                right = array.slice(middle);
+
+            return merge(mergeSort(left), mergeSort(right));
         }
-
-        var middle = Math.floor(len / 2),
-            left = array.slice(0, middle),
-            right = array.slice(middle);
-
-        return merge(mergeSort(left), mergeSort(right));
     }
 })();
