@@ -30,6 +30,15 @@ class Recursion
       return Fibonacci(n-1) + Fibonacci(n-2)
     end
   end
+
+  def Summer(n)
+    # Recursively sum up to n
+    if n > 0
+      return n + Summer(n-1)
+    else
+      return 0
+    end
+  end
 end
 
 class Search
@@ -107,3 +116,4 @@ puts("Linear search: ", search.LinearSearch(unsorted_array, 8))
 puts("Binary search: ", search.BinarySearch(sorted_array, 22))
 puts("Binary search (starting with unsorted array): ", search.BinarySearch(unsorted_array, 8, sorted=false))
 puts("Merge sort: ", sorting.MergeSort(unsorted_array))
+puts("Summing up to 5: ", recur.Summer(5))
