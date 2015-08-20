@@ -39,6 +39,15 @@ class Recursion
       return 0
     end
   end
+
+  def Power(n, power)
+    # Recursively get n to power
+    if power == 1
+      return n
+    else
+      return n * Power(n, power-1)
+    end
+  end
 end
 
 class Search
@@ -117,3 +126,4 @@ puts("Binary search: ", search.BinarySearch(sorted_array, 22))
 puts("Binary search (starting with unsorted array): ", search.BinarySearch(unsorted_array, 8, sorted=false))
 puts("Merge sort: ", sorting.MergeSort(unsorted_array))
 puts("Summing up to 5: ", recur.Summer(5))
+puts("5 to the power of 3: ", recur.Power(5, 3))
