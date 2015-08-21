@@ -48,6 +48,22 @@ public:
 		}
 	}
 
+	int Summer(int n) {
+		if (n > 0) {
+			return n + Summer(n-1);
+		} else {
+			return 0;
+		}
+	}
+
+	int Power(int n, int power) {
+		if (power == 1) {
+			return n;
+		} else {
+			return n * Power(n, power-1);
+		}
+	}
+
 };
 
 class Search {
@@ -105,6 +121,7 @@ int main() {
 	
 	Recursion recur;
 	std::cout << "Recursive Fibonacci: " << recur.Fibonacci(5) << std::endl;
-	
+	std::cout << "Recursive summing up to 5: " << recur.Summer(5) << std::endl;
+	std::cout << "Recursive 5 to the third power: " << recur.Power(5, 3) << std::endl;
 	return 0;
 }
