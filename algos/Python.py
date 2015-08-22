@@ -4,9 +4,9 @@ from timeit import Timer
 import string
 import operator
 import collections
-import bitarray
 import math
-import mmh3
+# import mmh3
+# import bitarray
 
 class Exceptions:
 
@@ -1044,6 +1044,7 @@ class Search(Algorithms):
             done = True
         return done
 
+
     @staticmethod
     def pos_to_node_id(row, column, board_size):
         """Convert position on chess board to node number"""
@@ -1230,6 +1231,32 @@ class Math(Algorithms):
 class Sorting(Algorithms):
 
     @staticmethod
+    def select(sequence, start):
+        """
+        Selection sort select function:
+        Finds the smallest item in a sequence
+        """
+        min_index = start
+        for i in range(start + 1, len(sequence)):
+            if sequence[min_index] > sequence[i]:
+                min_index = i
+
+        return min_index
+
+    @staticmethod
+    def selection_sort(sequence):
+        """
+        Selection sort - O(n^2)
+        """
+        for i in range(len(sequence) - 1):
+            min_index = Sorting.select(sequence, i)
+            temp = sequence[i]
+            sequence[i] = sequence[min_index]
+            sequence[min_index] = temp
+
+        return sequence
+
+    @staticmethod
     def merge_sort(array):
         """Merge sort - Recursive, O(n log n)"""
         if len(array) <= 1:
@@ -1286,18 +1313,6 @@ class Sorting(Algorithms):
                     temp = a_list[j]
                     a_list[j] = a_list[j + 1]
                     a_list[j + 1] = temp
-
-    @staticmethod
-    def selection_sort(a_list):
-        """Selection sort - O(n^2)"""
-        for i in range(len(a_list) - 1, 0, -1):
-            max_position = 0
-            for j in range(1, i + 1):
-                if a_list[j] > a_list[max_position]:
-                    max_position = j
-            temp = a_list[i]
-            a_list[i] = a_list[max_position]
-            a_list[max_position] = temp
 
     @staticmethod
     def quicksort(a_list):
@@ -1691,3 +1706,7 @@ if __name__ == '__main__':
     # for i in range(50):
     #     bloom.add(str(i))
     # print("20" in bloom)
+
+    """Selection sort"""
+    test_list = [1, 5, 2, 3, 9, 7, 12, 21, 15]
+    print(Sorting.selection_sort(test_list))
