@@ -1214,6 +1214,25 @@ class Math(Algorithms):
             return (a + b, a)
 
     @staticmethod
+    def Fibonacci_memo(n, memo_dict):
+        if n in memo_dict:
+            return memo_dict[n]
+
+        if n == 0:
+            memo_dict[0] = 0
+            return 0
+
+        if n == 1:
+            memo[1] = 1
+            return 1
+
+        val = Math.Fibonacci_memo(n-1, memo_dict) + Math.Fibonacci_memo(n-2, memo_dict)
+
+        memo_dict[n] = val
+
+        return val 
+
+    @staticmethod
     def sum_of_nums_from_string(string):
         return sum([float(x) for x in string.split(',')])
 
@@ -1707,6 +1726,10 @@ if __name__ == '__main__':
     #     bloom.add(str(i))
     # print("20" in bloom)
 
-    """Selection sort"""
-    test_list = [1, 5, 2, 3, 9, 7, 12, 21, 15]
-    print(Sorting.selection_sort(test_list))
+    # """Selection sort"""
+    # test_list = [1, 5, 2, 3, 9, 7, 12, 21, 15]
+    # print(Sorting.selection_sort(test_list))
+
+    """Fibonacci with memoization"""
+    memo = {}
+    print(Math.Fibonacci_memo(9, memo))
