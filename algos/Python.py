@@ -1198,6 +1198,22 @@ class Math(Algorithms):
         return result
 
     @staticmethod
+    def factorial_memo(n, memo_dict):
+        if n == 0:
+            memo_dict[0] = 1
+            return 1
+
+        if n == 1:
+            memo_dict[1] = 1
+            return 1
+
+        val = n * Math.factorial_memo(n-1, memo_dict)
+
+        memo_dict[n] = val
+
+        return val
+
+    @staticmethod
     def Fibonacci(n):
         """Fibonacci - O(n^2)"""
         if n <= 1:
@@ -1230,7 +1246,7 @@ class Math(Algorithms):
 
         memo_dict[n] = val
 
-        return val 
+        return val
 
     @staticmethod
     def sum_of_nums_from_string(string):
@@ -1730,6 +1746,10 @@ if __name__ == '__main__':
     # test_list = [1, 5, 2, 3, 9, 7, 12, 21, 15]
     # print(Sorting.selection_sort(test_list))
 
-    """Fibonacci with memoization"""
-    memo = {}
-    print(Math.Fibonacci_memo(9, memo))
+    # """Fibonacci with memoization"""
+    # memo = {}
+    # print(Math.Fibonacci_memo(9, memo))
+
+    """Factorial with memoization"""
+    memo2 = {}
+    print(Math.factorial_memo(5, memo2))
