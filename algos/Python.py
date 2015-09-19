@@ -1022,6 +1022,21 @@ class Search(Algorithms):
             start_node.set_finish(self.time)
 
     @staticmethod
+    def basic_DFS(current, goal, adjacent):
+        """
+        Simple DFS algorithm
+        """
+        if current == goal:
+            return [current]
+
+        for next in adjacent(current):
+            result = Search.basic_dfs(next)
+            if result is not None:
+                return [current] + result
+
+        return None
+
+    @staticmethod
     def knights_tour(tree_depth, visited_nodes, current_node, limit):
         """Knight's tour algorithm - relies on Graph and Vertex"""
         current_node.set_color('gray')
