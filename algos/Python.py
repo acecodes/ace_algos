@@ -11,6 +11,12 @@ import math
 # import mmh3
 # import bitarray
 
+"""
+For Dijkstra's algorithm
+"""
+inf = float('inf')
+Edge = collections.namedtuple('Edge', 'start, end, cost')
+
 
 class Exceptions:
 
@@ -1063,6 +1069,43 @@ class Search(Algorithms):
             done = True
         return done
 
+    class Dijkstra:
+        """
+        Dijkstra's algorithm implementation
+        Credit to RosettaCode
+        """
+
+        def __init__(self, edges):
+            self.edges = edges_2 = [Edge(*edge) for edge in edges]
+            self.vertices = set(sum(([e.start, e.end] for e in edges_2), []))
+
+        def dijkstra(self, source, dest):
+            assert source in self.vertices
+            dist = {vertex: inf for vertex in self.vertices}
+            previous = {vertex: None for vertex in self.vertices}
+            dist[source] = 0
+            q = self.vertices.copy()
+            neighbors = {vertex: set() for vertex in self.vertices}
+            for start, end, cost in self.edges:
+                neighbors[start].add((end, cost))
+
+            while q:
+                u = min(q, key=lambda vertex: dist[vertex])
+                q.remove(u)
+                if dist[u] == inf or u == dest:
+                    break
+                for v, cost in neighbors[u]:
+                    alt = dist[u] + cost
+                    if alt < dist[v]:
+                        dist[v] = alt
+                        previous[v] = u
+            s, u = collections.deque(), dest
+            while previous[u]:
+                s.appendleft(u)
+                u = previous[u]
+            s.appendleft(u)
+            return s
+
 
     @staticmethod
     def pos_to_node_id(row, column, board_size):
@@ -1412,48 +1455,6 @@ class Sorting(Algorithms):
         a_list[right_mark] = temp
 
         return right_mark
-
-
-inf = float('inf')
-Edge = collections.namedtuple('Edge', 'start, end, cost')
-
-
-class Dijkstra:
-    """
-    Dijkstra's algorithm implementation
-    Credit to RosettaCode
-    """
-
-    def __init__(self, edges):
-        self.edges = edges_2 = [Edge(*edge) for edge in edges]
-        self.vertices = set(sum(([e.start, e.end] for e in edges_2), []))
-
-    def dijkstra(self, source, dest):
-        assert source in self.vertices
-        dist = {vertex: inf for vertex in self.vertices}
-        previous = {vertex: None for vertex in self.vertices}
-        dist[source] = 0
-        q = self.vertices.copy()
-        neighbors = {vertex: set() for vertex in self.vertices}
-        for start, end, cost in self.edges:
-            neighbors[start].add((end, cost))
-
-        while q:
-            u = min(q, key=lambda vertex: dist[vertex])
-            q.remove(u)
-            if dist[u] == inf or u == dest:
-                break
-            for v, cost in neighbors[u]:
-                alt = dist[u] + cost
-                if alt < dist[v]:
-                    dist[v] = alt
-                    previous[v] = u
-        s, u = collections.deque(), dest
-        while previous[u]:
-            s.appendleft(u)
-            u = previous[u]
-        s.appendleft(u)
-        return s
 
 
 class Generation(Algorithms):
@@ -1816,7 +1817,7 @@ if __name__ == '__main__':
     # print(Math.factorial_memo(5, memo2))
 
     """Finding the minimal cost of traversing a graph with Dijkstra's algorithm"""
-    dijkstra = Dijkstra([
+    dijkstra = Search.Dijkstra([
         ('a', 'b', 7),
         ('a', 'c', 9),
         ('a', 'f', 14),
