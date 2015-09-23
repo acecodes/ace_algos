@@ -93,6 +93,81 @@ class Recursion(Algorithms):
             return n + Recursion.summer(n - 1)
         return 0
 
+    @staticmethod
+    def Euclid(p, q):
+        """Euclidean algorithm - Finds GCF between two numbers"""
+        if q == 0:
+            return p
+        r = p % q
+        return Recursion.Euclid(q, r)
+
+    @staticmethod
+    def factorial(n):
+        """Factorial - Recursive"""
+        if n == 0 or n == 1:
+            return 1
+        return n * Recursion.factorial(n - 1)
+
+    @staticmethod
+    def factorial_i(n):
+        """Factorial - Iterative"""
+        result = 1
+        while n > 1:
+            result = result * n
+            n -= 1
+        return result
+
+    @staticmethod
+    def factorial_memo(n, memo_dict):
+        if n == 0:
+            memo_dict[0] = 1
+            return 1
+
+        if n == 1:
+            memo_dict[1] = 1
+            return 1
+
+        val = n * Recursion.factorial_memo(n-1, memo_dict)
+
+        memo_dict[n] = val
+
+        return val
+
+    @staticmethod
+    def Fibonacci(n):
+        """Fibonacci - O(n^2)"""
+        if n <= 1:
+            return n
+        return Recursion.Fibonacci(n - 1) + Recursion.Fibonacci(n - 2)
+
+    @staticmethod
+    def Fibonacci_improved(n):
+        """Fibonacci - O(n)"""
+        if n <= 1:
+            return (n, 0)
+        else:
+            (a, b) = Recursion.Fibonacci_improved(n - 1)
+            return (a + b, a)
+
+    @staticmethod
+    def Fibonacci_memo(n, memo_dict):
+        if n in memo_dict:
+            return memo_dict[n]
+
+        if n == 0:
+            memo_dict[0] = 0
+            return 0
+
+        if n == 1:
+            memo_dict[1] = 1
+            return 1
+
+        val = Recursion.Fibonacci_memo(n-1, memo_dict) + Recursion.Fibonacci_memo(n-2, memo_dict)
+
+        memo_dict[n] = val
+
+        return val
+
 
 class Hash(Algorithms):
 
@@ -1234,81 +1309,6 @@ class Search(Algorithms):
 
 
 class Math(Algorithms):
-
-    @staticmethod
-    def Euclid(p, q):
-        """Euclidean algorithm - Finds GCF between two numbers"""
-        if q == 0:
-            return p
-        r = p % q
-        return Math.Euclid(q, r)
-
-    @staticmethod
-    def factorial(n):
-        """Factorial - Recursive"""
-        if n == 0 or n == 1:
-            return 1
-        return n * Math.factorial(n - 1)
-
-    @staticmethod
-    def factorial_i(n):
-        """Factorial - Iterative"""
-        result = 1
-        while n > 1:
-            result = result * n
-            n -= 1
-        return result
-
-    @staticmethod
-    def factorial_memo(n, memo_dict):
-        if n == 0:
-            memo_dict[0] = 1
-            return 1
-
-        if n == 1:
-            memo_dict[1] = 1
-            return 1
-
-        val = n * Math.factorial_memo(n-1, memo_dict)
-
-        memo_dict[n] = val
-
-        return val
-
-    @staticmethod
-    def Fibonacci(n):
-        """Fibonacci - O(n^2)"""
-        if n <= 1:
-            return n
-        return Math.Fibonacci(n - 1) + Math.Fibonacci(n - 2)
-
-    @staticmethod
-    def Fibonacci_improved(n):
-        """Fibonacci - O(n)"""
-        if n <= 1:
-            return (n, 0)
-        else:
-            (a, b) = Math.Fibonacci_improved(n - 1)
-            return (a + b, a)
-
-    @staticmethod
-    def Fibonacci_memo(n, memo_dict):
-        if n in memo_dict:
-            return memo_dict[n]
-
-        if n == 0:
-            memo_dict[0] = 0
-            return 0
-
-        if n == 1:
-            memo[1] = 1
-            return 1
-
-        val = Math.Fibonacci_memo(n-1, memo_dict) + Math.Fibonacci_memo(n-2, memo_dict)
-
-        memo_dict[n] = val
-
-        return val
 
     @staticmethod
     def sum_of_nums_from_string(string):
