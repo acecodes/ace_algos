@@ -1,6 +1,7 @@
 # Compatability imports that allow usage in Python 2 & 3
 from __future__ import print_function
 from timeit import Timer
+from pprint import pprint
 
 import string
 import operator
@@ -20,7 +21,7 @@ Edge = collections.namedtuple('Edge', 'start, end, cost')
 
 class Exceptions:
 
-    class Empsuty(Exception):
+    class Empty(Exception):
         pass
 
 
@@ -1179,7 +1180,8 @@ class Search(Algorithms):
                 s.appendleft(u)
                 u = previous[u]
             s.appendleft(u)
-            return s
+            return_list = [x for x in s]
+            return ', '.join(return_list)
 
 
     @staticmethod
@@ -1609,7 +1611,7 @@ def measure_dynamic_array(n):
 
 """Experimentation area - uncomment areas of interest"""
 if __name__ == '__main__':
-    # print(Math.test(Math.factorial(10)))  # Test speed of factorial function
+
     # Generate a valid key sum for a check digit
     # print(Generation.Luhn_digit(7992739871))
     # Check a valid digit and key - should return True
@@ -1810,11 +1812,11 @@ if __name__ == '__main__':
 
     # """Fibonacci with memoization"""
     # memo = {}
-    # print(Math.Fibonacci_memo(9, memo))
+    # print(Recursion.Fibonacci_memo(9, memo))
 
     # """Factorial with memoization"""
     # memo2 = {}
-    # print(Math.factorial_memo(5, memo2))
+    # print(Recursion.factorial_memo(5, memo2))
 
     """Finding the minimal cost of traversing a graph with Dijkstra's algorithm"""
     dijkstra = Search.Dijkstra([
@@ -1827,4 +1829,4 @@ if __name__ == '__main__':
         ('c', 'f', 2),
         ('d', 'e', 6),
         ('e', 'f', 9)])
-    print(dijkstra.dijkstra('a', 'f'))
+    pprint(dijkstra.dijkstra('a', 'f'))
