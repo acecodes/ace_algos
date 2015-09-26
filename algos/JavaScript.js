@@ -1,5 +1,5 @@
 var Main = (function() {
-    
+
     "use strict";
 
     function Recursion() {}
@@ -83,6 +83,22 @@ var Main = (function() {
                 return true;
             }
             return palindrome(newstr[0]) + palindrome(newstr[newstr.slice(-1)]);
+        },
+
+        flatten: function flattenArrays(a, r) {
+            // Flatten an array
+            var len = a.length;
+            if (!r) {
+                r = [];
+            }
+            for (var i = 0; i < len; i++) {
+                if (a[i].constructor === Array) {
+                    flattenArrays(a[i], r);
+                } else {
+                    r.push(a[i]);
+                }
+            }
+            return r;
         }
     };
 
@@ -237,37 +253,26 @@ var Main = (function() {
         }
     };
 
-    // Array flattener
-    function flattenArrays(a, r) {
-        var len = a.length;
-        if (!r) {
-            r = [];
-        }
-        for (var i = 0; i < len; i++) {
-            if (a[i].constructor === Array) {
-                flattenArrays(a[i], r);
-            } else {
-                r.push(a[i]);
-            }
-        }
-        return r;
-    }
-    // Find maximum triplet, from Codility
-    function triplets(A) {
-        // A is an array
-        var len = A.length;
-        Array.prototype.max = function() {
-            return Math.max.apply(null, this);
-        };
-        if (len < 3) {
-            throw "The array is too small";
-        }
+    function Solutions() {}
 
-        function sorter(a, b) {
-            return a - b;
+    Solutions.prototype = {
+        triplets: function triplets(A) {
+            // Find maximum triplet, from Codility
+            // A is an array
+            var len = A.length;
+            Array.prototype.max = function() {
+                return Math.max.apply(null, this);
+            };
+            if (len < 3) {
+                throw "The array is too small";
+            }
+
+            function sorter(a, b) {
+                return a - b;
+            }
+            A = A.sort(sorter);
+            var result = [A[0] * A[1] * A[len - 1], A[len - 1] * A[len - 2] * A[len - 3]].max();
+            return result;
         }
-        A = A.sort(sorter);
-        var result = [A[0] * A[1] * A[len - 1], A[len - 1] * A[len - 2] * A[len - 3]].max();
-        return result;
-    }
+    };
 })();

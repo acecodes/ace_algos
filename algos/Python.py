@@ -8,9 +8,9 @@ import operator
 import collections
 import math
 
-# Third-party libraries
-# import mmh3
-# import bitarray
+# Third-party libraries - use requirements.txt
+import mmh3
+import bitarray
 
 """
 For Dijkstra's algorithm
