@@ -1,6 +1,7 @@
 from pybrain.tools.shortcuts import buildNetwork
 from pybrain.datasets import SupervisedDataSet
 from pybrain.supervised.trainers import BackpropTrainer
+from pybrain.structure import FeedForwardNetwork, LinearLayer, SigmoidLayer, TanhLayer
 
 # New network with 2 inputs, 3 hidden layers and 1 output
 ann = buildNetwork(2, 3, 1)
@@ -38,3 +39,13 @@ trainer.train()
 
 # Trains until convergence
 trainer.trainUntilConvergence()
+
+# Create a feedforward (one direction) network
+ff_net = FeedForwardNetwork
+input_layer = LinearLayer(2)
+hidden_layer = SigmoidLayer(3)
+output_layer = LinearLayer(1)
+
+ff_net.addInputModule(input_layer)
+ff_net.addModule(hidden_layer)
+ff_net.addOutputModule(output_layer)
