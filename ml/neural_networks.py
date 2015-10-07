@@ -27,8 +27,8 @@ print('Outputs: {}'.format(data_set['target']))
 # print('Clearing data set...')
 # data_set.clear()
 
-print('Inputs (cleared): {}'.format(data_set['input']))
-print('Outputs: {}'.format(data_set['target']))
+# print('Inputs (cleared): {}'.format(data_set['input']))
+# print('Outputs: {}'.format(data_set['target']))
 
 # Another ANN, this time to illustrate training
 ann2 = buildNetwork(2, 3, 1, bias=True, hiddenclass=TanhLayer)
@@ -42,9 +42,9 @@ trainer.trainUntilConvergence()
 
 # Create a feedforward (one direction) network
 ff_net = FeedForwardNetwork()
-input_layer = LinearLayer(2)
-hidden_layer = SigmoidLayer(3)
-output_layer = LinearLayer(1)
+input_layer = LinearLayer(2, name='Input Layer')
+hidden_layer = SigmoidLayer(3, name='Hidden layer')
+output_layer = LinearLayer(1, name='Output layer')
 
 ff_net.addInputModule(input_layer)
 ff_net.addModule(hidden_layer)
@@ -59,5 +59,8 @@ ff_net.addConnection(hidden_to_output)
 
 # Sort for proper network operation
 ff_net.sortModules()
+
+print(ff_net.activate([1, 2]))
+print(ff_net.activate([3, 5]))
 
 print(ff_net)
