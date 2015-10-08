@@ -63,4 +63,11 @@ ff_net.sortModules()
 print(ff_net.activate([1, 2]))
 print(ff_net.activate([3, 5]))
 
+# Start over
+
+ff_net.reset()
+print('Network reset.')
+print(ff_net.activate([5, 8]))
+print(ff_net.activate([12, 2]))
+
 print(ff_net)
