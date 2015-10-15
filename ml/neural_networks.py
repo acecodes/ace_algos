@@ -1,7 +1,11 @@
 from pybrain.tools.shortcuts import buildNetwork
-from pybrain.datasets import SupervisedDataSet
+from pybrain.datasets import SupervisedDataSet, ClassificationDataSet
 from pybrain.supervised.trainers import BackpropTrainer
 from pybrain.structure import FeedForwardNetwork, LinearLayer, SigmoidLayer, TanhLayer, FullConnection
+from pybrain.utilities import percentError
+from pybrain.structure.modules import SoftMaxLayer
+from scipy import diag, arange, meshgrid, where
+from numpy.random import multivariate_normal
 
 # New network with 2 inputs, 3 hidden layers and 1 output
 ann = buildNetwork(2, 3, 1)
@@ -71,3 +75,26 @@ print(ff_net.activate([5, 8]))
 print(ff_net.activate([12, 2]))
 
 print(ff_net)
+
+"""
+Feedfordward Neural Network Classification
+"""
+
+means = [(-1, 0), (2, 4), (3, 1)]
+
+cov = [diag([1, 1]), diag([0.5, 1.2]), diag([1.5, 0.7])]
+all_data = ClassificationDataSet(2, 1, nb_classes=3)
+for n in range(400):
+    for klass in range(3):
+        input_1 = multivariate_normal(means[klass], cov[klass])
+        all_data.addSample(input_1, [klass])
+
+tstdata, trndata = all_data.splitWithProportion(0.25)
+
+trndata._convertToOneOfMany()
+tstdata._convertToOneOfMany()
+
+print("Number of training patterns: ", len(trndata))
+print("Input and output dimensions: ", trndata.indim, trndata.outdim)
+print("First sample (input, target, class):")
+print(trndata['input'][0], trndata['target'][0], trndata['class'][0])
