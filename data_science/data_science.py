@@ -20,3 +20,25 @@ df_daily = pd.DataFrame(np.random.randn(4, 4), index=daily_dates, columns=list('
 
 print(df_monthly)
 print(df_daily)
+
+# Using a dict to construct a DataFrame
+dataframe_2 = pd.DataFrame({
+    'A': 1,
+    'B': pd.Timestamp('20150505'),
+    'C': pd.Series(1, index=list(range(4)), dtype='float32'),
+    'D': np.array([3] * 4, dtype='int32'),
+    'E': pd.Categorical(['test', 'train', ' test', 'train']),
+    'F': 'Testing'
+    })
+
+print(dataframe_2)
+print(dataframe_2.dtypes)
+
+print('Dataframe head (two elements):')
+print(dataframe_2.head(2))
+print('Dataframe tail (two elements):')
+print(dataframe_2.tail(2))
+print('Dataframe stats:')
+print(dataframe_2.describe())
+print('Dataframe transposition:')
+print(dataframe_2.T)
