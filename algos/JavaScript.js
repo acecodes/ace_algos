@@ -273,6 +273,11 @@ var Main = (function() {
             A = A.sort(sorter);
             var result = [A[0] * A[1] * A[len - 1], A[len - 1] * A[len - 2] * A[len - 3]].max();
             return result;
+        },
+
+        palindrome: function palindrome(s) { 
+            // Palindrome checker without recursion
+            return s === s.split("").reverse().join(""); 
         }
     };
 })();
