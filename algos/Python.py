@@ -1611,6 +1611,14 @@ class Build(Algorithms):
 
         return graph
 
+class Solutions:
+
+    @staticmethod
+    def palindrome_checker(string):
+        new_string = [x for x in string]
+        new_string.reverse()
+        return ''.join(new_string) == string
+
 
 def measure_dynamic_array(n):
     """Measure the number of bytes a dynamic array up to size n-1
