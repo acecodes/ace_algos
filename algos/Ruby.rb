@@ -112,10 +112,17 @@ class Sorting
     end 
 end
 
+class Solutions
+  def Palindrome(string)
+    return string == string.reverse
+  end
+end
+
 
 recur = Recursion.new()
 search = Search.new()
 sorting = Sorting.new()
+solutions = Solutions.new()
 
 puts("Euclid's algorithm (10, 25): ", recur.Euclid(10, 25))
 puts("Factorial (5): ", recur.Factorial(5))
@@ -127,3 +134,5 @@ puts("Binary search (starting with unsorted array): ", search.BinarySearch(unsor
 puts("Merge sort: ", sorting.MergeSort(unsorted_array))
 puts("Summing up to 5: ", recur.Summer(5))
 puts("5 to the power of 3: ", recur.Power(5, 3))
+puts("Is 'dude' a palindrome? ", solutions.Palindrome('dude'))
+puts("Is 'dood' a plaindrome? ", solutions.Palindrome('dood'))
