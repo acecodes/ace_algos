@@ -1,7 +1,3 @@
-# Arrays for testing
-unsorted_array = [5, 7, 8, 12, 1]
-sorted_array = [1, 5, 9, 12, 15, 22]
-
 class Recursion
   def Euclid(p, q)
     # Euclid's algorithm for finding GCFs
@@ -123,6 +119,10 @@ recur = Recursion.new()
 search = Search.new()
 sorting = Sorting.new()
 solutions = Solutions.new()
+
+# Arrays for testing
+unsorted_array = [5, 7, 8, 12, 1]
+sorted_array = [1, 5, 9, 12, 15, 22]
 
 puts("Euclid's algorithm (10, 25): ", recur.Euclid(10, 25))
 puts("Factorial (5): ", recur.Factorial(5))
