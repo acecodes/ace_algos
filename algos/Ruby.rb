@@ -44,6 +44,16 @@ class Recursion
       return n * Power(n, power-1)
     end
   end
+
+  def Reverse(str)
+    """
+    Recursively reverse a string
+    """
+    if str.length <= 1
+      return str
+    end
+    return Reverse(str[-1]) + Reverse(str[0..-2])
+  end
 end
 
 class Search
@@ -136,3 +146,4 @@ puts("Summing up to 5: ", recur.Summer(5))
 puts("5 to the power of 3: ", recur.Power(5, 3))
 puts("Is 'dude' a palindrome? ", solutions.Palindrome('dude'))
 puts("Is 'dood' a plaindrome? ", solutions.Palindrome('dood'))
+puts("Reverse 'goat': ", recur.Reverse("goat"))
