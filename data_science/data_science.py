@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
 # Create a series of values with an integer index
 series = pd.Series([1, 3, 5, np.nan, 6, 8])
@@ -15,8 +14,12 @@ print(monthly_dates)
 print(daily_dates)
 
 # Create labeled data (data frames) with random records
-df_monthly = pd.DataFrame(np.random.randn(4, 4), index=monthly_dates, columns=list('ABCD'))
-df_daily = pd.DataFrame(np.random.randn(4, 4), index=daily_dates, columns=list('EFGH'))
+df_monthly = pd.DataFrame(np.random.randn(4, 4),
+                          index=monthly_dates,
+                          columns=list('ABCD'))
+df_daily = pd.DataFrame(np.random.randn(4, 4),
+                        index=daily_dates,
+                        columns=list('EFGH'))
 
 print(df_monthly)
 print(df_daily)
@@ -29,7 +32,7 @@ dataframe_2 = pd.DataFrame({
     'D': np.array([3] * 4, dtype='int32'),
     'E': pd.Categorical(['test', 'train', ' test', 'train']),
     'F': 'Testing'
-    })
+})
 
 print(dataframe_2)
 print(dataframe_2.dtypes)
